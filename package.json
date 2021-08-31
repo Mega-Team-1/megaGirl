@@ -1,0 +1,23 @@
+{
+  "name": "megagirl",
+  "version": "1.0.0",
+  "description": "Mega Girl",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pamify/megaGirl.git"
+  },
+  "author": "Pamela Jung, Kathy Son, Jason Bhatti",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pamify/megaGirl/issues"
+  },
+  "homepage": "https://github.com/pamify/megaGirl#readme",
+  "dependencies": {
+    "kaboom": "^0.5.1",
+    "parcel-bundler": "^1.12.5"
+  }
+}
