@@ -25,7 +25,6 @@ loadSprite();
 const walkSpeed = 135
 const jumpSmall = 300
 const jumpBig = 550
-let CURRENT_JUMP_FORCE = JUMP_FORCE
 const gameover = 400
 const enemySpeed = 20
 
