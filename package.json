@@ -4,7 +4,11 @@
   "description": "Mega Girl",
   "main": "index.js",
   "scripts": {
+    "start": "parcel index.html -p 8000",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "alias": {
+    "kaboom": "./node_modules/kaboom/dist/kaboom.mjs"
   },
   "repository": {
     "type": "git",
