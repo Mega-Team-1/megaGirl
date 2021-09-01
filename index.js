@@ -1,53 +1,27 @@
 import kaboom from 'kaboom';
-
-
+import bg from './src/images';
 
 //initialize a canvas
-kaboom({
+export const k =  kaboom({
   global: true,
   fullscreen: false,
   scale: 2,
   debug: true,
   clearColor: [0, 0, 0, 0],
-  noGlobal: true,
 });
 
+//load assets into asset manager
+k.loadSprite('bg', bg);
 
-
-//Load assets into asset manager
-loadSprite('bg', bg);
-
-loadRoot();
-loadSprite();
-
-
-//Speed of each action
-const walkSpeed = 135
-const jumpSmall = 300
-const jumpBig = 550
-const gameover = 400
-const enemySpeed = 20
-
+// k.loadRoot();
+// k.loadSprite();
 
 //setting the scene
-scene('index', score => {
+k.scene('index', score => {
   layers(['bg', 'obj', 'ui'], 'obj');
 
-  //blueprint map
-  const maps = [];
-
-  //add in the background
-  add([sprite(''), pos(), scale(width() / 240, height() / 240), layer('')]);
-
-
-  //add the player
-  const player = add([
-    sprite('megagirl'),
-    solid(),
-    pos(30, 0),
-    body(),
-    origin(vec2(2, 0.25)),
-  ]);
+  //add in the image background
+  k.add([sprite('bg'), pos(), scale(width() / 240, height() / 240), layer('')]);
 
   //add the score
   const currentScore = add([
@@ -58,15 +32,8 @@ scene('index', score => {
       value: score,
     },
   ]);
-
-  //action
-  keyDown('left', () => {
-    player.move();
-  });
-
-  keyDown('right', () => {
-    player.move();
-  });
 });
 
-start('index', { score: 0 });
+k.start('index', { score: 0 });
+
+export default k;
