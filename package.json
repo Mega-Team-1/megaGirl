@@ -14,7 +14,7 @@
     "type": "git",
     "url": "git+https://github.com/pamify/megaGirl.git"
   },
-  "author": "Pamela Jung, Kathy Son, Jason Bhatti",
+  "author": "Pamela Jung, Kathy Son",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/pamify/megaGirl/issues"
@@ -22,6 +22,14 @@
   "homepage": "https://github.com/pamify/megaGirl#readme",
   "dependencies": {
     "kaboom": "^0.5.1",
-    "parcel-bundler": "^1.12.5"
+    "parcel-bundler": "^1.12.5",
+    "src": "^1.1.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "babel-eslint": "^10.1.0",
+    "minimist": "^1.2.5",
+    "parcel-plugin-clean-easy": "^1.0.2"
   }
 }
