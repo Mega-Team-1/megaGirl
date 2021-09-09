@@ -3181,6 +3181,36 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var maps = [['£                                                                                                                                                                                                                                                                                                                                                                                     ', '£                                                            %%                                                                                                                      =====                                                                                                      ==    ==   ==  ==  ==                                                                      ', '£                                                                                                                                                                                                                                                                               =============                                                                %%%%                            %%                                               ', '£                                                            ====                                      y                                                            ==============                                                             ==============                                                             =======     ====                                                                 ==============================================================()           ', '£                                                z      z              =============                                                                            =                         ==============                                                       ==================                                                                                                        =============                                           ', '£     %   =*=%=                               =====  ======   =======                                                                      =================                                            =====                             ========                                                                                              =============================================                                              ', '£                                                                                    =======                                                                                                                                                                                                                                                                                                ', '£                                        ====                                                  ==========                               =======                                                                       ===   ================                                                                                                                                                           ', '£                    ^   ^                                                                                     ====================                                                                                                                                                                                                                                                           ', '£                                                                                                                                                                                                   ', '£                                                                                                                                                                                                   ', '£=======================================                                                                      ===================']];
 exports.maps = maps;
+},{"../../kaboom":"kaboom.js"}],"src/components/big.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = big;
+
+var _kaboom = _interopRequireDefault(require("../../kaboom"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function big() {
+  var _isBig = false;
+  return {
+    isBig: function isBig() {
+      return _isBig;
+    },
+    biggify: function biggify() {
+      this.scale.x = 1.5;
+      this.scale.y = 1.5;
+      _isBig = true;
+    },
+    smallify: function smallify() {
+      this.scale.x = 1;
+      this.scale.y = 1;
+      _isBig = false;
+    }
+  };
+}
 },{"../../kaboom":"kaboom.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
@@ -3188,30 +3218,32 @@ var _kaboom = _interopRequireDefault(require("./kaboom"));
 
 var _levels = require("./src/scenes/levels");
 
+var _big = _interopRequireDefault(require("./src/components/big"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import run from './src/components/run';
 // import Animation from './src/scenes/animations';
 // import Collisions from './src/scenes/collisions';
 var SPEED = 122;
-var JUMP = 630;
+var JUMP = 600;
 var FALL = 600; //////////////////////////// ASSETS ////////////////////////////
 
-_kaboom.default.loadRoot('https://i.imgur.com/');
+_kaboom.default.loadRoot("https://i.imgur.com/");
 
-_kaboom.default.loadSprite('bg', 'yKGhJTy.png');
+_kaboom.default.loadSprite("bg", "yKGhJTy.png");
 
-_kaboom.default.loadSprite('strawberry', 'kSq1gmD.png');
+_kaboom.default.loadSprite("strawberry", "kSq1gmD.png");
 
-_kaboom.default.loadSprite('flower', 'ShYYu0G.png');
+_kaboom.default.loadSprite("flower", "ShYYu0G.png");
 
-_kaboom.default.loadSprite('carrot', 'm0b6U3j.png'); // carrot
+_kaboom.default.loadSprite("carrot", "m0b6U3j.png");
 
+_kaboom.default.loadSprite("box", "gesQ1KP.png");
 
-_kaboom.default.loadSprite('box', 'gesQ1KP.png');
+_kaboom.default.loadSprite("unbox", "bdrLpi6.png");
 
-_kaboom.default.loadSprite('unbox', 'bdrLpi6.png');
-
-_kaboom.default.loadSprite('spiky', 'Lztwmho.png', {
+_kaboom.default.loadSprite("spiky", "Lztwmho.png", {
   sliceX: 6,
   sliceY: 1,
   anims: {
@@ -3226,7 +3258,7 @@ _kaboom.default.loadSprite('spiky', 'Lztwmho.png', {
   }
 });
 
-_kaboom.default.loadSprite('sammie', 'TBGAfTZ.png', {
+_kaboom.default.loadSprite("sammie", "TBGAfTZ.png", {
   sliceX: 8,
   sliceY: 1,
   anims: {
@@ -3241,7 +3273,7 @@ _kaboom.default.loadSprite('sammie', 'TBGAfTZ.png', {
   }
 });
 
-_kaboom.default.loadSprite('cameron', 'oymj3qC.png', {
+_kaboom.default.loadSprite("cameron", "oymj3qC.png", {
   sliceX: 9,
   sliceY: 1,
   anims: {
@@ -3256,7 +3288,7 @@ _kaboom.default.loadSprite('cameron', 'oymj3qC.png', {
   }
 });
 
-_kaboom.default.loadSprite('girl', 'WngO9Ry.png', {
+_kaboom.default.loadSprite("girl", "WngO9Ry.png", {
   sliceX: 10,
   sliceY: 6,
   anims: {
@@ -3270,84 +3302,91 @@ _kaboom.default.loadSprite('girl', 'WngO9Ry.png', {
     }
   }
 }), //////////////////////////// SCENE ////////////////////////////
-_kaboom.default.scene('index', function (_ref) {
+_kaboom.default.scene("index", function (_ref) {
   var score = _ref.score;
 
-  _kaboom.default.layers(['bg', 'obj', 'ui'], 'obj'); // add in the image background
+  _kaboom.default.layers(["bg", "obj", "ui"], "obj"); // add in the image background
 
 
-  _kaboom.default.add([_kaboom.default.sprite('bg'), _kaboom.default.pos(_kaboom.default.vec2(-420, 280)), _kaboom.default.scale(_kaboom.default.width() / 240, _kaboom.default.height() / 240), _kaboom.default.layer('bg'), _kaboom.default.origin('center')]);
+  _kaboom.default.add([_kaboom.default.sprite("bg"), _kaboom.default.pos(_kaboom.default.vec2(-420, 280)), _kaboom.default.scale(_kaboom.default.width() / 240, _kaboom.default.height() / 240), _kaboom.default.layer("bg"), _kaboom.default.origin("center")]);
 
   var mapLevel = {
     width: 20,
     height: 30,
     pos: _kaboom.default.vec2(-300, 50),
-    origin: 'center',
-    '=': [_kaboom.default.sprite('flower'), _kaboom.default.solid()],
-    $: [_kaboom.default.sprite('strawberry'), 'strawberry'],
-    '%': [_kaboom.default.sprite('box'), _kaboom.default.solid(), 'strawberry-box'],
-    '*': [_kaboom.default.sprite('box'), _kaboom.default.solid(), 'carrot-box'],
-    '}': [_kaboom.default.sprite('unbox'), _kaboom.default.solid()],
-    '^': [_kaboom.default.sprite('spiky'), _kaboom.default.solid(), 'dangerous'],
-    y: [_kaboom.default.sprite('cameron'), _kaboom.default.solid(), _kaboom.default.scale(0.5)],
-    z: [_kaboom.default.sprite('sammie'), _kaboom.default.solid(), 'danger'],
-    '#': [_kaboom.default.sprite('carrot'), _kaboom.default.solid(), 'carrot', _kaboom.default.body()]
+    origin: "center",
+    "=": [_kaboom.default.sprite("flower"), _kaboom.default.solid()],
+    $: [_kaboom.default.sprite("strawberry"), "strawberry"],
+    "%": [_kaboom.default.sprite("box"), _kaboom.default.solid(), "strawberry-box"],
+    "*": [_kaboom.default.sprite("box"), _kaboom.default.solid(), "carrot-box"],
+    "}": [_kaboom.default.sprite("unbox"), _kaboom.default.solid()],
+    "^": [_kaboom.default.sprite("spiky"), _kaboom.default.solid(), "dangerous"],
+    y: [_kaboom.default.sprite("cameron"), _kaboom.default.solid(), _kaboom.default.scale(0.5)],
+    z: [_kaboom.default.sprite("sammie"), _kaboom.default.solid(), "danger"],
+    "#": [_kaboom.default.sprite("carrot"), _kaboom.default.solid(), "carrot", _kaboom.default.body()]
   };
 
-  var scoreBoard = _kaboom.default.add([_kaboom.default.text('0', 25), _kaboom.default.pos(20, 28), _kaboom.default.layer('ui'), {
+  var scoreBoard = _kaboom.default.add([_kaboom.default.text("0", 25), _kaboom.default.pos(20, 28), _kaboom.default.layer("ui"), {
     value: 0
   }]);
 
   var gameLevel = _kaboom.default.addLevel(_levels.maps[0], mapLevel); //////////////////////////// COLLISIONS ////////////////////////////
 
 
-  var player = _kaboom.default.add([_kaboom.default.sprite('girl'), _kaboom.default.pos(24, height() / 2), _kaboom.default.origin('center'), _kaboom.default.body(), _kaboom.default.solid(), _kaboom.default.scale()]);
+  var player = _kaboom.default.add([_kaboom.default.sprite("girl"), _kaboom.default.pos(24, height() / 2), _kaboom.default.origin("center"), _kaboom.default.body(), _kaboom.default.solid(), _kaboom.default.scale(), (0, _big.default)()]);
 
-  player.on('headbump', function (obj) {
-    if (obj.is('strawberry-box')) {
-      gameLevel.spawn('$', obj.gridPos.sub(0, 1));
-
-      _kaboom.default.destroy(obj);
-
-      gameLevel.spawn('}', obj.gridPos.sub(0, 0));
-    }
-
-    if (obj.is('carrot-box')) {
-      gameLevel.spawn('#', obj.gridPos.sub(0, 1));
+  player.on("headbump", function (obj) {
+    if (obj.is("strawberry-box")) {
+      gameLevel.spawn("$", obj.gridPos.sub(0, 1));
 
       _kaboom.default.destroy(obj);
 
-      gameLevel.spawn('}', obj.gridPos.sub(0, 0));
+      gameLevel.spawn("}", obj.gridPos.sub(0, 0));
     }
+
+    if (obj.is("carrot-box")) {
+      gameLevel.spawn("#", obj.gridPos.sub(0, 1));
+
+      _kaboom.default.destroy(obj);
+
+      gameLevel.spawn("}", obj.gridPos.sub(0, 0));
+    }
+  });
+  player.collides("carrot", function (c) {
+    _kaboom.default.destroy(c);
+
+    player.biggify();
+    SPEED += 250;
+    JUMP += 100;
   }); // increase score if strawberry is collected
 
-  player.collides('strawberry', function (c) {
-    _kaboom.default.destroy(c);
+  player.collides("strawberry", function (s) {
+    _kaboom.default.destroy(s);
 
     scoreBoard.value++;
     scoreBoard.text = scoreBoard.value;
   });
 
-  _kaboom.default.keyDown('left', function () {
+  _kaboom.default.keyDown("left", function () {
     player.move(-SPEED, 0);
   });
 
-  _kaboom.default.keyDown('right', function () {
+  _kaboom.default.keyDown("right", function () {
     player.move(SPEED, 0);
   });
 
-  _kaboom.default.keyPress('right', function () {
+  _kaboom.default.keyPress("right", function () {
     player.scale.x = 1;
-    player.play('move');
+    player.play("move");
   });
 
-  _kaboom.default.keyPress('left', function () {
+  _kaboom.default.keyPress("left", function () {
     player.scale.x = -1;
-    player.play('move');
+    player.play("move");
   });
 
-  _kaboom.default.keyRelease(['left', 'right'], function () {
-    player.play('idle');
+  _kaboom.default.keyRelease(["left", "right"], function () {
+    player.play("idle");
   });
 
   player.action(function () {
@@ -3356,41 +3395,41 @@ _kaboom.default.scene('index', function (_ref) {
     _kaboom.default.solid();
 
     if (player.pos.y >= FALL) {
-      _kaboom.default.go('lose', {
+      _kaboom.default.go("lose", {
         score: score.value
       });
     }
   });
 
-  _kaboom.default.action('dangerous', function (d) {
+  _kaboom.default.action("dangerous", function (d) {
     d.move(-10, 0);
   });
 
-  _kaboom.default.action('danger', function (d) {
+  _kaboom.default.action("danger", function (d) {
     d.move(-10, 0);
   });
 
-  _kaboom.default.action('cameron', function (l) {
+  _kaboom.default.action("cameron", function (l) {
     l.move(10, 0);
   });
 
-  _kaboom.default.keyDown('space', function () {
+  _kaboom.default.keyDown("space", function () {
     _kaboom.default.solid();
 
     player.grounded() ? player.jump(JUMP) : null;
   });
 });
 
-_kaboom.default.scene('lose', function (_ref2) {
+_kaboom.default.scene("lose", function (_ref2) {
   var score = _ref2.score;
 
-  _kaboom.default.add([_kaboom.default.text('Score: ' + score, 24), _kaboom.default.origin('center'), _kaboom.default.pos(_kaboom.default.width() / 2, _kaboom.default.height() / 2)]);
+  _kaboom.default.add([_kaboom.default.text("Score: " + score, 24), _kaboom.default.origin("center"), _kaboom.default.pos(_kaboom.default.width() / 2, _kaboom.default.height() / 2)]);
 });
 
-_kaboom.default.start('index', {
+_kaboom.default.start("index", {
   score: 0
 });
-},{"./kaboom":"kaboom.js","./src/scenes/levels":"src/scenes/levels.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./kaboom":"kaboom.js","./src/scenes/levels":"src/scenes/levels.js","./src/components/big":"src/components/big.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -3418,7 +3457,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65215" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58117" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
