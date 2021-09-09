@@ -1,27 +1,28 @@
-import k from '../../index';
+// import k from '../../index';
 
-//animation speed
-const walkSpeed = 135;
-const jumpSmall = 300;
-const jumpBig = 550;
-const gameover = 400;
-const enemySpeed = 20;
+// export default function Animation() {
+//   const player = k.add([
+//     k.sprite('girl'),
+//     k.pos(24, height() / 2),
+//     k.origin('center'),
+//     k.body(),
+//     k.solid(),
+//     k.scale(),
+//   ]);
+// }
 
+// player.play('idle');
 
-  //add the player
-  const player = add([
-    sprite('megagirl'),
-    solid(),
-    pos(30, 0),
-    body(),
-    origin(vec2(2, 0.25)),
-  ]);
+// k.keyPress('left', () => {
+//   player.scale.x = -1;
+//   player.play('move');
+// });
 
-  //the animations
-  k.keyDown('left', () => {
-    player.move();
-  });
+// k.keyPress('right', () => {
+//   player.scale.x = 1;
+//   player.play('move');
+// });
 
-  k.keyDown('right', () => {
-    player.move();
-  });
+// k.keyRelease(['left', 'right'], () => {
+//   player.play('idle');
+// });

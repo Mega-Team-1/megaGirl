@@ -3142,11 +3142,7 @@ var pn = nn((Un, qt) => {
 var _default = pn();
 
 exports.default = _default;
-},{}],"src/images.js":[function(require,module,exports) {
-//png to url conversions
-var bg = 'data:image/png;base64,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';
-module.exports = bg;
-},{}],"index.js":[function(require,module,exports) {
+},{}],"kaboom.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3156,39 +3152,245 @@ exports.default = exports.k = void 0;
 
 var _kaboom = _interopRequireDefault(require("kaboom"));
 
-var _images = _interopRequireDefault(require("./src/images"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var k = (0, _kaboom.default)({
+  width: 1000,
+  height: 1000,
+  global: true,
+  fullscreen: true,
+  scale: 2,
+  debug: true,
+  crisp: false,
+  clearColor: [0, 0, 0, 0]
+});
+exports.k = k;
+var _default = k;
+exports.default = _default;
+},{"kaboom":"node_modules/kaboom/dist/kaboom.mjs"}],"src/scenes/levels.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.maps = void 0;
+
+var _kaboom = _interopRequireDefault(require("../../kaboom"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//initialize a canvas
-var k = (0, _kaboom.default)({
-  global: true,
-  fullscreen: false,
-  scale: 2,
-  debug: true,
-  clearColor: [0, 0, 0, 0]
-}); //load assets into asset manager
+var maps = [['£                                                                                                                                                                                                                                                                                                                                                                                     ', '£                                                            %%                                                                                                                      =====                                                                                                      ==    ==   ==  ==  ==                                                                      ', '£                                                                                                                                                                                                                                                                               =============                                                                %%%%                            %%                                               ', '£                                                            ====                                      y                                                            ==============                                                             ==============                                                             =======     ====                                                                 ==============================================================()           ', '£                                                z      z              =============                                                                            =                         ==============                                                       ==================                                                                                                        =============                                           ', '£     %   =*=%=                               =====  ======   =======                                                                      =================                                            =====                             ========                                                                                              =============================================                                              ', '£                                                                                    =======                                                                                                                                                                                                                                                                                                ', '£                                        ====                                                  ==========                               =======                                                                       ===   ================                                                                                                                                                           ', '£                    ^   ^                                                                                     ====================                                                                                                                                                                                                                                                           ', '£                                                                                                                                                                                                   ', '£                                                                                                                                                                                                   ', '£=======================================                                                                      ===================']];
+exports.maps = maps;
+},{"../../kaboom":"kaboom.js"}],"index.js":[function(require,module,exports) {
+"use strict";
 
-exports.k = k;
-k.loadSprite('bg', _images.default); // k.loadRoot();
-// k.loadSprite();
-//setting the scene
+var _kaboom = _interopRequireDefault(require("./kaboom"));
 
-k.scene('index', function (score) {
-  layers(['bg', 'obj', 'ui'], 'obj'); //add in the image background
+var _levels = require("./src/scenes/levels");
 
-  k.add([sprite('bg'), pos(), scale(width() / 240, height() / 240), layer('')]); //add the score
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-  var currentScore = add([text(score, 10), pos(31, 6), layer('ui'), {
-    value: score
-  }]);
+// import Animation from './src/scenes/animations';
+// import Collisions from './src/scenes/collisions';
+var SPEED = 122;
+var JUMP = 630;
+var FALL = 600; //////////////////////////// ASSETS ////////////////////////////
+
+_kaboom.default.loadRoot('https://i.imgur.com/');
+
+_kaboom.default.loadSprite('bg', 'yKGhJTy.png');
+
+_kaboom.default.loadSprite('strawberry', 'kSq1gmD.png');
+
+_kaboom.default.loadSprite('flower', 'ShYYu0G.png');
+
+_kaboom.default.loadSprite('carrot', 'm0b6U3j.png'); // carrot
+
+
+_kaboom.default.loadSprite('box', 'gesQ1KP.png');
+
+_kaboom.default.loadSprite('unbox', 'bdrLpi6.png');
+
+_kaboom.default.loadSprite('spiky', 'Lztwmho.png', {
+  sliceX: 6,
+  sliceY: 1,
+  anims: {
+    move: {
+      from: 1,
+      to: 6
+    },
+    idle: {
+      from: 1,
+      to: 1
+    }
+  }
 });
-k.start('index', {
+
+_kaboom.default.loadSprite('sammie', 'TBGAfTZ.png', {
+  sliceX: 8,
+  sliceY: 1,
+  anims: {
+    move: {
+      from: 1,
+      to: 8
+    },
+    idle: {
+      from: 1,
+      to: 1
+    }
+  }
+});
+
+_kaboom.default.loadSprite('cameron', 'oymj3qC.png', {
+  sliceX: 9,
+  sliceY: 1,
+  anims: {
+    move: {
+      from: 1,
+      to: 10
+    },
+    idle: {
+      from: 1,
+      to: 1
+    }
+  }
+});
+
+_kaboom.default.loadSprite('girl', 'WngO9Ry.png', {
+  sliceX: 10,
+  sliceY: 6,
+  anims: {
+    move: {
+      from: 11,
+      to: 20
+    },
+    idle: {
+      from: 1,
+      to: 1
+    }
+  }
+}), //////////////////////////// SCENE ////////////////////////////
+_kaboom.default.scene('index', function (_ref) {
+  var score = _ref.score;
+
+  _kaboom.default.layers(['bg', 'obj', 'ui'], 'obj'); // add in the image background
+
+
+  _kaboom.default.add([_kaboom.default.sprite('bg'), _kaboom.default.pos(_kaboom.default.vec2(-420, 280)), _kaboom.default.scale(_kaboom.default.width() / 240, _kaboom.default.height() / 240), _kaboom.default.layer('bg'), _kaboom.default.origin('center')]);
+
+  var mapLevel = {
+    width: 20,
+    height: 30,
+    pos: _kaboom.default.vec2(-300, 50),
+    origin: 'center',
+    '=': [_kaboom.default.sprite('flower'), _kaboom.default.solid()],
+    $: [_kaboom.default.sprite('strawberry'), 'strawberry'],
+    '%': [_kaboom.default.sprite('box'), _kaboom.default.solid(), 'strawberry-box'],
+    '*': [_kaboom.default.sprite('box'), _kaboom.default.solid(), 'carrot-box'],
+    '}': [_kaboom.default.sprite('unbox'), _kaboom.default.solid()],
+    '^': [_kaboom.default.sprite('spiky'), _kaboom.default.solid(), 'dangerous'],
+    y: [_kaboom.default.sprite('cameron'), _kaboom.default.solid(), _kaboom.default.scale(0.5)],
+    z: [_kaboom.default.sprite('sammie'), _kaboom.default.solid(), 'danger'],
+    '#': [_kaboom.default.sprite('carrot'), _kaboom.default.solid(), 'carrot', _kaboom.default.body()]
+  };
+
+  var scoreBoard = _kaboom.default.add([_kaboom.default.text('0', 25), _kaboom.default.pos(20, 28), _kaboom.default.layer('ui'), {
+    value: 0
+  }]);
+
+  var gameLevel = _kaboom.default.addLevel(_levels.maps[0], mapLevel); //////////////////////////// COLLISIONS ////////////////////////////
+
+
+  var player = _kaboom.default.add([_kaboom.default.sprite('girl'), _kaboom.default.pos(24, height() / 2), _kaboom.default.origin('center'), _kaboom.default.body(), _kaboom.default.solid(), _kaboom.default.scale()]);
+
+  player.on('headbump', function (obj) {
+    if (obj.is('strawberry-box')) {
+      gameLevel.spawn('$', obj.gridPos.sub(0, 1));
+
+      _kaboom.default.destroy(obj);
+
+      gameLevel.spawn('}', obj.gridPos.sub(0, 0));
+    }
+
+    if (obj.is('carrot-box')) {
+      gameLevel.spawn('#', obj.gridPos.sub(0, 1));
+
+      _kaboom.default.destroy(obj);
+
+      gameLevel.spawn('}', obj.gridPos.sub(0, 0));
+    }
+  }); // increase score if strawberry is collected
+
+  player.collides('strawberry', function (c) {
+    _kaboom.default.destroy(c);
+
+    scoreBoard.value++;
+    scoreBoard.text = scoreBoard.value;
+  });
+
+  _kaboom.default.keyDown('left', function () {
+    player.move(-SPEED, 0);
+  });
+
+  _kaboom.default.keyDown('right', function () {
+    player.move(SPEED, 0);
+  });
+
+  _kaboom.default.keyPress('right', function () {
+    player.scale.x = 1;
+    player.play('move');
+  });
+
+  _kaboom.default.keyPress('left', function () {
+    player.scale.x = -1;
+    player.play('move');
+  });
+
+  _kaboom.default.keyRelease(['left', 'right'], function () {
+    player.play('idle');
+  });
+
+  player.action(function () {
+    _kaboom.default.camPos(player.pos);
+
+    _kaboom.default.solid();
+
+    if (player.pos.y >= FALL) {
+      _kaboom.default.go('lose', {
+        score: score.value
+      });
+    }
+  });
+
+  _kaboom.default.action('dangerous', function (d) {
+    d.move(-10, 0);
+  });
+
+  _kaboom.default.action('danger', function (d) {
+    d.move(-10, 0);
+  });
+
+  _kaboom.default.action('cameron', function (l) {
+    l.move(10, 0);
+  });
+
+  _kaboom.default.keyDown('space', function () {
+    _kaboom.default.solid();
+
+    player.grounded() ? player.jump(JUMP) : null;
+  });
+});
+
+_kaboom.default.scene('lose', function (_ref2) {
+  var score = _ref2.score;
+
+  _kaboom.default.add([_kaboom.default.text('Score: ' + score, 24), _kaboom.default.origin('center'), _kaboom.default.pos(_kaboom.default.width() / 2, _kaboom.default.height() / 2)]);
+});
+
+_kaboom.default.start('index', {
   score: 0
 });
-var _default = k;
-exports.default = _default;
-},{"kaboom":"node_modules/kaboom/dist/kaboom.mjs","./src/images":"src/images.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./kaboom":"kaboom.js","./src/scenes/levels":"src/scenes/levels.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -3216,7 +3418,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49606" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65215" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
