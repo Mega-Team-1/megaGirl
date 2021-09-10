@@ -3,21 +3,24 @@ import { maps } from "./src/scenes/levels";
 // import Animation from './src/scenes/animations';
 // import Collisions from './src/scenes/collisions';
 
-let SPEED = 180;
-let JUMP = 600; 
+let SPEED = 200;
+let JUMP = 550; 
 const FALL = 600;
 
 //////////////////////////// ASSETS ////////////////////////////
+// k.loadSound("death1", "sounds/death1.mp3");
+// k.loadSound("death2", "sounds/death2.mp3");
 
 k.loadRoot("https://i.imgur.com/");
 
-k.loadSprite("bg", "yKGhJTy.png");
+k.loadSprite("bg", "MjKncmI.png");
 k.loadSprite("strawberry", "kSq1gmD.png");
 k.loadSprite("cherry", "eslaY4x.png");
 k.loadSprite("flower", "ShYYu0G.png");
 k.loadSprite("carrot", "m0b6U3j.png");
-k.loadSprite("box", "gesQ1KP.png");
+k.loadSprite("box", "gesQ1KP.png"); 
 k.loadSprite("unbox", "bdrLpi6.png");
+k.loadSprite("cameron", "QhfUuoL.png",
 
 k.loadSprite("spiky", "Lztwmho.png", {
   sliceX: 6,
@@ -26,7 +29,7 @@ k.loadSprite("spiky", "Lztwmho.png", {
     move: { from: 1, to: 6 },
     idle: { from: 1, to: 1 },
   },
-});
+}),
 
 k.loadSprite("sammie", "TBGAfTZ.png", {
   sliceX: 8,
@@ -35,16 +38,7 @@ k.loadSprite("sammie", "TBGAfTZ.png", {
     move: { from: 1, to: 8 },
     idle: { from: 1, to: 1 },
   },
-});
-
-k.loadSprite("cameron", "oMHGieD.png", {
-  sliceX: 5,
-  sliceY: 3,
-  anims: {
-    move: { from: 1, to: 10 },
-    idle: { from: 1, to: 1 },
-  },
-});
+}),
 
 k.loadSprite("girl", "WngO9Ry.png", {
   sliceX: 10,
@@ -86,11 +80,11 @@ k.loadSprite("girl", "WngO9Ry.png", {
       k.text(0),
       k.pos(400, 25),
       k.layer("ui"),
-      { time: 0, },
+      { time: 120, },
     ]);
   
     timer.action(() => {
-      timer.time += dt();
+      timer.time -= dt();
       timer.text = timer.time.toFixed(0);
     });
 
@@ -101,7 +95,7 @@ k.loadSprite("girl", "WngO9Ry.png", {
       origin: "center",
       "=": [k.sprite("flower"), k.solid()],
       "$": [k.sprite("strawberry"), k.solid(), "strawberry"],
-      "+": [k.sprite("cherry"), k.solid(), "cherry"],
+      "+": [k.sprite("box"), k.solid(), "cherry-box"],
       "%": [k.sprite("box"), k.solid(), "strawberry-box"],
       "*": [k.sprite("box"), k.solid(), "carrot-box"],
       "}": [k.sprite("unbox"), k.solid()],
@@ -135,12 +129,17 @@ k.loadSprite("girl", "WngO9Ry.png", {
         k.destroy(obj);
         gameLevel.spawn("}", obj.gridPos.sub(0, 0));
       }
+      if (obj.is("cherry-box")) {
+        gameLevel.spawn("#", obj.gridPos.sub(0, 1));
+        k.destroy(obj);
+        gameLevel.spawn("}", obj.gridPos.sub(0, 0));
+      }
     });
 
     player.collides("carrot", (c) => {
       k.destroy(c);
       SPEED += 100;
-      JUMP += 100;
+      JUMP += 50;
       scoreBoard.value += 200;
       scoreBoard.text = scoreBoard.value;
       speedBoard.value += 100;
@@ -169,6 +168,7 @@ k.loadSprite("girl", "WngO9Ry.png", {
       k.destroy(d);
       if (scoreBoard.value <= 0) {
         k.go("lose", { score: score.value });
+        // k.play("death1");
       } else {
         scoreBoard.value -= 100;
         scoreBoard.text = scoreBoard.value;
@@ -219,21 +219,27 @@ k.loadSprite("girl", "WngO9Ry.png", {
       }
     }),
 
+    k.action("strawberry", (d) => {
+      d.move(-10, 0);
+    }),
+
+    k.action("carrot", (d) => {
+      d.move(-10, 0);
+    }),
+
     k.action("dangerous", (d) => {
       d.move(-10, 0);
     }),
 
     k.action("danger", (d) => {
-      d.move(-10, 0);
+      d.move(-15, 0);
     }),
 
     k.action("cameron", (l) => {
-      l.move(10, 0);
+      l.move(-15, 0);
     }),
 
     k.keyDown("space", () => {
-      console.log('k--', k)
-      console.log('player---', player)
       k.solid();
       player.grounded() ? player.jump(JUMP) : null;
     })
@@ -250,4 +256,4 @@ k.scene("lose", ({ score }) => {
   ])
 }),
 
-k.start("index", { score: 0 }))
+k.start("index", { score: 0 })))
