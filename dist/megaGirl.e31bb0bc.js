@@ -3155,8 +3155,8 @@ var _kaboom = _interopRequireDefault(require("kaboom"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var k = (0, _kaboom.default)({
-  width: 1000,
-  height: 1000,
+  width: 640,
+  height: 400,
   global: true,
   fullscreen: true,
   scale: 2,
@@ -3179,7 +3179,7 @@ var _kaboom = _interopRequireDefault(require("../../kaboom"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var maps = [['£                                                                                                                                                                                                                                                                                                                                                                                     ', '£                                                            %%                                                                                                                      =====                                                                                                      ==    ==   ==  ==  ==                                                                      ', '£                                                                                                                                                                                                                                                                               =============                                                                %%%%                            %%                                               ', '£                                                            ====                                      y                                                            ==============                                                             ==============                                                             =======     ====                                                                 ==============================================================()           ', '£                                                z      z              =============                                                                            =                         ==============                                                       ==================                                                                                                        =============                                           ', '£   *     %     %    %      %       %      %       =====  ======   =======                                                                      =================                                            =====                             ========                                                                                              =============================================                                              ', '£                                                                                    =======                                                                                                                                                                                                                                                                                                ', '£                                        ====                                                  ==========                               =======                                                                       ===   ================                                                                                                                                                           ', '£                    ^   ^                                                                                     ====================                                                                                                                                                                                                                                                           ', ' £                                                                                                                                                                                                   ', '£                                                                                                                                                                                                   ', '£=======================================                                                                      ===================']];
+var maps = [['                                                             %%                                                                y                                                                                                                                   %+*%         y                                                                                                y          ', '                                                                                                                                                       %                            =====                                                                                                       ==     ==     ==     ==     ==                                                                ', '                                                                                                                                                                                                                                                                               =============                                                                %%%+                                                                             ', '                                                                          ^                                                                                        ==============                                                             =====                                                             =======     =======                                                                         ==============================================================', '                                                                       =============                                                                          z =                         ==============                                                       ==================                                                                                                                                                         ', '   *      %       %       %       %                   ==========                                                           z                     =================                                            =====                                                                                                                                 =============================================                                              ', '                                                                                    =======                                                                                                                                                                                                                                                                                                ', '                                        ====                                                  ==========                              =======                                                                       ===      =============                                                                                                                                                           ', '                                                                                                              ==============                                                                                                                                                                                                                                                           ', '                                                                                                                                                                                                    ', '                   ^             ^                                                                                    ^                                                                               ', '=======================================                                                                      ===================']];
 exports.maps = maps;
 },{"../../kaboom":"kaboom.js"}],"index.js":[function(require,module,exports) {
 "use strict";
@@ -3192,13 +3192,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // import Animation from './src/scenes/animations';
 // import Collisions from './src/scenes/collisions';
-var SPEED = 180;
-var JUMP = 600;
+var SPEED = 200;
+var JUMP = 550;
 var FALL = 600; //////////////////////////// ASSETS ////////////////////////////
+// k.loadSound("death1", "sounds/death1.mp3");
+// k.loadSound("death2", "sounds/death2.mp3");
 
 _kaboom.default.loadRoot("https://i.imgur.com/");
 
-_kaboom.default.loadSprite("bg", "yKGhJTy.png");
+_kaboom.default.loadSprite("bg", "MjKncmI.png");
 
 _kaboom.default.loadSprite("strawberry", "kSq1gmD.png");
 
@@ -3212,7 +3214,7 @@ _kaboom.default.loadSprite("box", "gesQ1KP.png");
 
 _kaboom.default.loadSprite("unbox", "bdrLpi6.png");
 
-_kaboom.default.loadSprite("spiky", "Lztwmho.png", {
+_kaboom.default.loadSprite("cameron", "QhfUuoL.png", _kaboom.default.loadSprite("spiky", "Lztwmho.png", {
   sliceX: 6,
   sliceY: 1,
   anims: {
@@ -3225,9 +3227,7 @@ _kaboom.default.loadSprite("spiky", "Lztwmho.png", {
       to: 1
     }
   }
-});
-
-_kaboom.default.loadSprite("sammie", "TBGAfTZ.png", {
+}), _kaboom.default.loadSprite("sammie", "TBGAfTZ.png", {
   sliceX: 8,
   sliceY: 1,
   anims: {
@@ -3240,24 +3240,7 @@ _kaboom.default.loadSprite("sammie", "TBGAfTZ.png", {
       to: 1
     }
   }
-});
-
-_kaboom.default.loadSprite("cameron", "oMHGieD.png", {
-  sliceX: 5,
-  sliceY: 3,
-  anims: {
-    move: {
-      from: 1,
-      to: 10
-    },
-    idle: {
-      from: 1,
-      to: 1
-    }
-  }
-});
-
-_kaboom.default.loadSprite("girl", "WngO9Ry.png", {
+}), _kaboom.default.loadSprite("girl", "WngO9Ry.png", {
   sliceX: 10,
   sliceY: 6,
   anims: {
@@ -3288,11 +3271,11 @@ _kaboom.default.scene("index", function (_ref) {
   }]);
 
   var timer = _kaboom.default.add([_kaboom.default.text(0), _kaboom.default.pos(400, 25), _kaboom.default.layer("ui"), {
-    time: 0
+    time: 120
   }]);
 
   timer.action(function () {
-    timer.time += dt();
+    timer.time -= dt();
     timer.text = timer.time.toFixed(0);
   });
   var mapLevel = {
@@ -3302,7 +3285,7 @@ _kaboom.default.scene("index", function (_ref) {
     origin: "center",
     "=": [_kaboom.default.sprite("flower"), _kaboom.default.solid()],
     "$": [_kaboom.default.sprite("strawberry"), _kaboom.default.solid(), "strawberry"],
-    "+": [_kaboom.default.sprite("cherry"), _kaboom.default.solid(), "cherry"],
+    "+": [_kaboom.default.sprite("box"), _kaboom.default.solid(), "cherry-box"],
     "%": [_kaboom.default.sprite("box"), _kaboom.default.solid(), "strawberry-box"],
     "*": [_kaboom.default.sprite("box"), _kaboom.default.solid(), "carrot-box"],
     "}": [_kaboom.default.sprite("unbox"), _kaboom.default.solid()],
@@ -3333,12 +3316,20 @@ _kaboom.default.scene("index", function (_ref) {
 
       gameLevel.spawn("}", obj.gridPos.sub(0, 0));
     }
+
+    if (obj.is("cherry-box")) {
+      gameLevel.spawn("#", obj.gridPos.sub(0, 1));
+
+      _kaboom.default.destroy(obj);
+
+      gameLevel.spawn("}", obj.gridPos.sub(0, 0));
+    }
   });
   player.collides("carrot", function (c) {
     _kaboom.default.destroy(c);
 
     SPEED += 100;
-    JUMP += 100;
+    JUMP += 50;
     scoreBoard.value += 200;
     scoreBoard.text = scoreBoard.value;
     speedBoard.value += 100;
@@ -3365,7 +3356,8 @@ _kaboom.default.scene("index", function (_ref) {
     if (scoreBoard.value <= 0) {
       _kaboom.default.go("lose", {
         score: score.value
-      });
+      }); // k.play("death1");
+
     } else {
       scoreBoard.value -= 100;
       scoreBoard.text = scoreBoard.value;
@@ -3403,16 +3395,17 @@ _kaboom.default.scene("index", function (_ref) {
         score: score.value
       });
     }
+  }), _kaboom.default.action("strawberry", function (d) {
+    d.move(-10, 0);
+  }), _kaboom.default.action("carrot", function (d) {
+    d.move(-10, 0);
   }), _kaboom.default.action("dangerous", function (d) {
     d.move(-10, 0);
   }), _kaboom.default.action("danger", function (d) {
-    d.move(-10, 0);
+    d.move(-15, 0);
   }), _kaboom.default.action("cameron", function (l) {
-    l.move(10, 0);
+    l.move(-15, 0);
   }), _kaboom.default.keyDown("space", function () {
-    console.log('k--', _kaboom.default);
-    console.log('player---', player);
-
     _kaboom.default.solid();
 
     player.grounded() ? player.jump(JUMP) : null;
@@ -3425,7 +3418,7 @@ _kaboom.default.scene("lose", function (_ref2) {
   _kaboom.default.add([_kaboom.default.text("Score: " + score, 24), _kaboom.default.origin("center"), _kaboom.default.pos(_kaboom.default.width() / 2, _kaboom.default.height() / 2)]);
 }), _kaboom.default.start("index", {
   score: 0
-}));
+})));
 },{"./kaboom":"kaboom.js","./src/scenes/levels":"src/scenes/levels.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -3454,7 +3447,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51022" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51236" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
