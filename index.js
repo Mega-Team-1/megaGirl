@@ -4,7 +4,7 @@ import { maps } from "./src/scenes/levels";
 // import Collisions from './src/scenes/collisions';
 
 let SPEED = 200;
-let JUMP = 550; 
+let JUMP = 550;
 const FALL = 600;
 
 //////////////////////////// ASSETS ////////////////////////////
@@ -13,12 +13,12 @@ const FALL = 600;
 
 k.loadRoot("https://i.imgur.com/");
 
-k.loadSprite("bg", "MjKncmI.png");
+k.loadSprite("bg", "3njZ5wc.png");
 k.loadSprite("strawberry", "kSq1gmD.png");
 k.loadSprite("cherry", "eslaY4x.png");
 k.loadSprite("flower", "ShYYu0G.png");
 k.loadSprite("carrot", "m0b6U3j.png");
-k.loadSprite("box", "gesQ1KP.png"); 
+k.loadSprite("box", "gesQ1KP.png");
 k.loadSprite("unbox", "bdrLpi6.png");
 k.loadSprite("cameron", "QhfUuoL.png",
 
@@ -56,10 +56,10 @@ k.loadSprite("girl", "WngO9Ry.png", {
     // add in the image background
     k.add([
       k.sprite("bg"),
-      k.pos(k.vec2(-420, 280)),
-      k.scale(k.width() / 240, k.height() / 240),
+      k.pos(k.vec2(7500, 210)),
+      k.scale(k.width() / 600, k.height() / 280),
       k.layer("bg"),
-      k.origin("center")
+      k.origin("right")
     ]);
 
     const scoreBoard = k.add([
@@ -82,7 +82,7 @@ k.loadSprite("girl", "WngO9Ry.png", {
       k.layer("ui"),
       { time: 120, },
     ]);
-  
+
     timer.action(() => {
       timer.time -= dt();
       timer.text = timer.time.toFixed(0);
@@ -117,7 +117,7 @@ k.loadSprite("girl", "WngO9Ry.png", {
       k.solid(),
       k.scale(),
     ]);
-    
+
     player.on("headbump", (obj) => {
       if (obj.is("strawberry-box")) {
         gameLevel.spawn("$", obj.gridPos.sub(0, 1));

@@ -1,13 +1,13 @@
 import kaboom from 'kaboom';
 
 export const k = kaboom({
-  width:640,
-  height:400,
+  width:100,
+  height:100,
   global: true,
   fullscreen: true,
   scale: 2,
    debug: true,
-  crisp: false,
+  crisp: true,
   clearColor: [0, 0, 0, 0],
 });
 

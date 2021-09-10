@@ -3155,13 +3155,18 @@ var _kaboom = _interopRequireDefault(require("kaboom"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var k = (0, _kaboom.default)({
+<<<<<<< Updated upstream
   width: 640,
   height: 400,
+=======
+  width: 100,
+  height: 100,
+>>>>>>> Stashed changes
   global: true,
   fullscreen: true,
   scale: 2,
   debug: true,
-  crisp: false,
+  crisp: true,
   clearColor: [0, 0, 0, 0]
 });
 exports.k = k;
@@ -3179,7 +3184,11 @@ var _kaboom = _interopRequireDefault(require("../../kaboom"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+<<<<<<< Updated upstream
 var maps = [['                                                             %%                                                                y                                                                                                                                   %+*%         y                                                                                                y          ', '                                                                                                                                                       %                            =====                                                                                                       ==     ==     ==     ==     ==                                                                ', '                                                                                                                                                                                                                                                                               =============                                                                %%%+                                                                             ', '                                                                          ^                                                                                        ==============                                                             =====                                                             =======     =======                                                                         ==============================================================', '                                                                       =============                                                                          z =                         ==============                                                       ==================                                                                                                                                                         ', '   *      %       %       %       %                   ==========                                                           z                     =================                                            =====                                                                                                                                 =============================================                                              ', '                                                                                    =======                                                                                                                                                                                                                                                                                                ', '                                        ====                                                  ==========                              =======                                                                       ===      =============                                                                                                                                                           ', '                                                                                                              ==============                                                                                                                                                                                                                                                           ', '                                                                                                                                                                                                    ', '                   ^             ^                                                                                    ^                                                                               ', '=======================================                                                                      ===================']];
+=======
+var maps = [['                    =======                                  %%                       ======                                   y                    ======                                                     ======                                              %+*%         y                                                                                                y          ', '                                                                                                                                                       %                            =====                                                                                                       ==     ==     ==     ==     ==                                                                ', '        =======                                 =======                                                  ======                        ======                                                                         ==           ==                      ==                  =============                                                                %%%+                                                                             ', '                                                                          ^                                                                                        ==============                                                             =====                                                             =======     =======                                                                         ==============================================================', '                                                                       =============                                                                          z =                         ==============                                                       ==================                                                                                                                                                         ', '   *      *       *       *       %                   ==========                                                           z                     =================                                            =====                                                                                                                                 =============================================                                              ', '                                                                                    =======                                                                                                                                                                                                                                                                                                ', '                                        ====                                                  ==========                              =======                                                                       ===      =============                                                                                                                                                           ', '                                                                                                              ==============                                                 ======                                                                                                                                                                                                    ', '                                                                                                                                                       ======                                       ', '                                                                            ======                                    ^                                                                               ', '=======================================                    ======                                            ===================']];
+>>>>>>> Stashed changes
 exports.maps = maps;
 },{"../../kaboom":"kaboom.js"}],"index.js":[function(require,module,exports) {
 "use strict";
@@ -3200,7 +3209,11 @@ var FALL = 600; //////////////////////////// ASSETS ////////////////////////////
 
 _kaboom.default.loadRoot("https://i.imgur.com/");
 
+<<<<<<< Updated upstream
 _kaboom.default.loadSprite("bg", "MjKncmI.png");
+=======
+_kaboom.default.loadSprite("bg", "3njZ5wc.png");
+>>>>>>> Stashed changes
 
 _kaboom.default.loadSprite("strawberry", "kSq1gmD.png");
 
@@ -3260,7 +3273,7 @@ _kaboom.default.scene("index", function (_ref) {
   _kaboom.default.layers(["bg", "obj", "ui"], "obj"); // add in the image background
 
 
-  _kaboom.default.add([_kaboom.default.sprite("bg"), _kaboom.default.pos(_kaboom.default.vec2(-420, 280)), _kaboom.default.scale(_kaboom.default.width() / 240, _kaboom.default.height() / 240), _kaboom.default.layer("bg"), _kaboom.default.origin("center")]);
+  _kaboom.default.add([_kaboom.default.sprite("bg"), _kaboom.default.pos(_kaboom.default.vec2(7500, 210)), _kaboom.default.scale(_kaboom.default.width() / 600, _kaboom.default.height() / 280), _kaboom.default.layer("bg"), _kaboom.default.origin("right")]);
 
   var scoreBoard = _kaboom.default.add([_kaboom.default.text("0", 25), _kaboom.default.pos(20, 28), _kaboom.default.layer("ui"), {
     value: 0
@@ -3447,7 +3460,11 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+<<<<<<< Updated upstream
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "51236" + '/');
+=======
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55675" + '/');
+>>>>>>> Stashed changes
 
   ws.onmessage = function (event) {
     checkedAssets = {};
