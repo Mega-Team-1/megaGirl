@@ -229,7 +229,9 @@ k.scene("index", ({ score }) => {
       if (player.pos.y >= FALL) {
         gameAudio.pause();
         dieAudio.play();
+
         k.go("lose", { score: scoreBoard.value });
+
       }
     }),
 
@@ -268,7 +270,9 @@ k.scene("lose", ({ score }) => {
     k.origin("center"),
     k.pos(k.width() / 2, k.height() / 2),
 
+
   ])
+
 
 }),
 

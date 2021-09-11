@@ -3406,8 +3406,10 @@ _kaboom.default.scene("index", function (_ref) {
       dieAudio.play();
 
       _kaboom.default.go("lose", {
+
         score: scoreBoard.value
       });
+
     }
   }), _kaboom.default.action("strawberry", function (d) {
     d.move(20, 0);
@@ -3429,7 +3431,9 @@ _kaboom.default.scene("lose", function (_ref2) {
   var score = _ref2.score;
 
   // console.log('score', score)
+
   _kaboom.default.add([_kaboom.default.text('YOU LOSE! Your Score is: ' + score, 12), _kaboom.default.origin("center"), _kaboom.default.pos(_kaboom.default.width() / 2, _kaboom.default.height() / 2)]);
+
 }), _kaboom.default.start("index", {
   score: 0
 }));
@@ -3461,6 +3465,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "56181" + '/');
 
   ws.onmessage = function (event) {
