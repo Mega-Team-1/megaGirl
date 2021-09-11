@@ -6,10 +6,14 @@ import { maps } from "./src/scenes/levels";
 let SPEED = 200;
 let JUMP = 550;
 const FALL = 600;
+var gameAudio = new Audio("https://kaboomjs.com/sounds/OtherworldlyFoe.mp3");
+var dieAudio = new Audio("https://kaboomjs.com/sounds/explode.mp3");
+var jumpAudio = new Audio("https://kaboomjs.com/sounds/powerup.mp3");
+var powerUpAudio = new Audio("https://kaboomjs.com/sounds/score.mp3");
+var hitAudio = new Audio("https://kaboomjs.com/sounds/hit.mp3");
+var dieAudio2 = new Audio("https://kaboomjs.com/sounds/weak.mp3");
 
 //////////////////////////// ASSETS ////////////////////////////
-// k.loadSound("death1", "sounds/death1.mp3");
-// k.loadSound("death2", "sounds/death2.mp3");
 
 k.loadRoot("https://i.imgur.com/");
 
@@ -20,7 +24,7 @@ k.loadSprite("flower", "ShYYu0G.png");
 k.loadSprite("carrot", "m0b6U3j.png");
 k.loadSprite("box", "gesQ1KP.png");
 k.loadSprite("unbox", "bdrLpi6.png");
-k.loadSprite("cameron", "QhfUuoL.png",
+k.loadSprite("cameron", "QhfUuoL.png"),
 
 k.loadSprite("spiky", "Lztwmho.png", {
   sliceX: 6,
@@ -50,7 +54,8 @@ k.loadSprite("girl", "WngO9Ry.png", {
 }),
   //////////////////////////// SCENE ////////////////////////////
 
-  k.scene("index", ({ score }) => {
+k.scene("index", ({ score }) => {
+  gameAudio.play();
     k.layers(["bg", "obj", "ui"], "obj");
 
     // add in the image background
@@ -62,12 +67,16 @@ k.loadSprite("girl", "WngO9Ry.png", {
       k.origin("right")
     ]);
 
-    const scoreBoard = k.add([
-      k.text("0", 25),
-      k.pos(20, 28),
+    const scoreBoard =
+    add([
+      k.text(score),
+      k.pos(30, 6),
       k.layer("ui"),
-      { value: 0, },
+      {
+        value: score,
+      },
     ]);
+
 
     const speedBoard = k.add([
       k.text("0", 25),
@@ -138,16 +147,15 @@ k.loadSprite("girl", "WngO9Ry.png", {
 
     player.collides("carrot", (c) => {
       k.destroy(c);
-      SPEED += 100;
-      JUMP += 50;
+      powerUpAudio.play();
+      JUMP += 75;
       scoreBoard.value += 200;
       scoreBoard.text = scoreBoard.value;
-      speedBoard.value += 100;
-      speedBoard.text = speedBoard.value;
     }),
 
     player.collides("strawberry", (s) => {
       k.destroy(s);
+      powerUpAudio.play();
       SPEED += 50;
       scoreBoard.value += 100;
       scoreBoard.text = scoreBoard.value;
@@ -157,19 +165,21 @@ k.loadSprite("girl", "WngO9Ry.png", {
 
     player.collides("cherry", (b) => {
       k.destroy(b);
-      SPEED += 50;
-      scoreBoard.value += 500;
+      powerUpAudio.play();
+      scoreBoard.value += 1000;
       scoreBoard.text = scoreBoard.value;
-      speedBoard.value += 50;
-      speedBoard.text = speedBoard.value;
     }),
 
     player.collides("dangerous", (d) => {
       k.destroy(d);
       if (scoreBoard.value <= 0) {
+        dieAudio2.play();
         k.go("lose", { score: score.value });
-        // k.play("death1");
+        k.start("index", { score: 0 });
+
+         // k.play("death1");
       } else {
+        hitAudio.play();
         scoreBoard.value -= 100;
         scoreBoard.text = scoreBoard.value;
       }
@@ -177,12 +187,14 @@ k.loadSprite("girl", "WngO9Ry.png", {
 
     player.collides("danger", (m) => {
       k.destroy(m);
+      hitAudio.play();
       scoreBoard.value += 100;
       scoreBoard.text = scoreBoard.value;
     }),
 
     player.collides("cameron", (r) => {
       k.destroy(r);
+      hitAudio.play();
       scoreBoard.value -= 300;
       scoreBoard.text = scoreBoard.value;
     }),
@@ -215,33 +227,35 @@ k.loadSprite("girl", "WngO9Ry.png", {
       k.camPos(player.pos);
       k.solid();
       if (player.pos.y >= FALL) {
-        k.go("lose", { score: score.value });
+        gameAudio.pause();
+        dieAudio.play();
+        k.go("lose", { score: scoreBoard.value });
       }
     }),
 
     k.action("strawberry", (d) => {
-      d.move(-10, 0);
+      d.move(20, 0);
     }),
 
     k.action("carrot", (d) => {
-      d.move(-10, 0);
+      d.move(20, 0);
     }),
 
     k.action("dangerous", (d) => {
-      d.move(-10, 0);
+      d.move(-100, 0);
     }),
 
     k.action("danger", (d) => {
-      d.move(-15, 0);
+      d.move(-30, 0);
     }),
 
     k.action("cameron", (l) => {
-      l.move(-15, 0);
+      l.move(-30, 0);
     }),
 
     k.keyDown("space", () => {
       k.solid();
-      player.grounded() ? player.jump(JUMP) : null;
+      player.grounded() ? player.jump(JUMP) & jumpAudio.play() : null;
     })
   )},
 
@@ -250,10 +264,12 @@ k.loadSprite("girl", "WngO9Ry.png", {
 k.scene("lose", ({ score }) => {
   // console.log('score', score)
   k.add([
-    k.text("Score: " + score, 24),
+    k.text('YOU LOSE! Your Score is: ' + score, 12),
     k.origin("center"),
     k.pos(k.width() / 2, k.height() / 2),
+
   ])
+
 }),
 
-k.start("index", { score: 0 })))
+k.start("index", { score: 0 }))

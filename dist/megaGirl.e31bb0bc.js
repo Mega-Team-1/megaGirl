@@ -3155,13 +3155,8 @@ var _kaboom = _interopRequireDefault(require("kaboom"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var k = (0, _kaboom.default)({
-<<<<<<< Updated upstream
-  width: 640,
-  height: 400,
-=======
   width: 100,
   height: 100,
->>>>>>> Stashed changes
   global: true,
   fullscreen: true,
   scale: 2,
@@ -3184,11 +3179,7 @@ var _kaboom = _interopRequireDefault(require("../../kaboom"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-<<<<<<< Updated upstream
-var maps = [['                                                             %%                                                                y                                                                                                                                   %+*%         y                                                                                                y          ', '                                                                                                                                                       %                            =====                                                                                                       ==     ==     ==     ==     ==                                                                ', '                                                                                                                                                                                                                                                                               =============                                                                %%%+                                                                             ', '                                                                          ^                                                                                        ==============                                                             =====                                                             =======     =======                                                                         ==============================================================', '                                                                       =============                                                                          z =                         ==============                                                       ==================                                                                                                                                                         ', '   *      %       %       %       %                   ==========                                                           z                     =================                                            =====                                                                                                                                 =============================================                                              ', '                                                                                    =======                                                                                                                                                                                                                                                                                                ', '                                        ====                                                  ==========                              =======                                                                       ===      =============                                                                                                                                                           ', '                                                                                                              ==============                                                                                                                                                                                                                                                           ', '                                                                                                                                                                                                    ', '                   ^             ^                                                                                    ^                                                                               ', '=======================================                                                                      ===================']];
-=======
 var maps = [['                    =======                                  %%                       ======                                   y                    ======                                                     ======                                              %+*%         y                                                                                                y          ', '                                                                                                                                                       %                            =====                                                                                                       ==     ==     ==     ==     ==                                                                ', '        =======                                 =======                                                  ======                        ======                                                                         ==           ==                      ==                  =============                                                                %%%+                                                                             ', '                                                                          ^                                                                                        ==============                                                             =====                                                             =======     =======                                                                         ==============================================================', '                                                                       =============                                                                          z =                         ==============                                                       ==================                                                                                                                                                         ', '   *      *       *       *       %                   ==========                                                           z                     =================                                            =====                                                                                                                                 =============================================                                              ', '                                                                                    =======                                                                                                                                                                                                                                                                                                ', '                                        ====                                                  ==========                              =======                                                                       ===      =============                                                                                                                                                           ', '                                                                                                              ==============                                                 ======                                                                                                                                                                                                    ', '                                                                                                                                                       ======                                       ', '                                                                            ======                                    ^                                                                               ', '=======================================                    ======                                            ===================']];
->>>>>>> Stashed changes
 exports.maps = maps;
 },{"../../kaboom":"kaboom.js"}],"index.js":[function(require,module,exports) {
 "use strict";
@@ -3203,17 +3194,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // import Collisions from './src/scenes/collisions';
 var SPEED = 200;
 var JUMP = 550;
-var FALL = 600; //////////////////////////// ASSETS ////////////////////////////
-// k.loadSound("death1", "sounds/death1.mp3");
-// k.loadSound("death2", "sounds/death2.mp3");
+var FALL = 600;
+var gameAudio = new Audio("https://kaboomjs.com/sounds/OtherworldlyFoe.mp3");
+var dieAudio = new Audio("https://kaboomjs.com/sounds/explode.mp3");
+var jumpAudio = new Audio("https://kaboomjs.com/sounds/powerup.mp3");
+var powerUpAudio = new Audio("https://kaboomjs.com/sounds/score.mp3");
+var hitAudio = new Audio("https://kaboomjs.com/sounds/hit.mp3");
+var dieAudio2 = new Audio("https://kaboomjs.com/sounds/weak.mp3"); //////////////////////////// ASSETS ////////////////////////////
 
 _kaboom.default.loadRoot("https://i.imgur.com/");
 
-<<<<<<< Updated upstream
-_kaboom.default.loadSprite("bg", "MjKncmI.png");
-=======
 _kaboom.default.loadSprite("bg", "3njZ5wc.png");
->>>>>>> Stashed changes
 
 _kaboom.default.loadSprite("strawberry", "kSq1gmD.png");
 
@@ -3227,7 +3218,7 @@ _kaboom.default.loadSprite("box", "gesQ1KP.png");
 
 _kaboom.default.loadSprite("unbox", "bdrLpi6.png");
 
-_kaboom.default.loadSprite("cameron", "QhfUuoL.png", _kaboom.default.loadSprite("spiky", "Lztwmho.png", {
+_kaboom.default.loadSprite("cameron", "QhfUuoL.png"), _kaboom.default.loadSprite("spiky", "Lztwmho.png", {
   sliceX: 6,
   sliceY: 1,
   anims: {
@@ -3269,14 +3260,15 @@ _kaboom.default.loadSprite("cameron", "QhfUuoL.png", _kaboom.default.loadSprite(
 }), //////////////////////////// SCENE ////////////////////////////
 _kaboom.default.scene("index", function (_ref) {
   var score = _ref.score;
+  gameAudio.play();
 
   _kaboom.default.layers(["bg", "obj", "ui"], "obj"); // add in the image background
 
 
   _kaboom.default.add([_kaboom.default.sprite("bg"), _kaboom.default.pos(_kaboom.default.vec2(7500, 210)), _kaboom.default.scale(_kaboom.default.width() / 600, _kaboom.default.height() / 280), _kaboom.default.layer("bg"), _kaboom.default.origin("right")]);
 
-  var scoreBoard = _kaboom.default.add([_kaboom.default.text("0", 25), _kaboom.default.pos(20, 28), _kaboom.default.layer("ui"), {
-    value: 0
+  var scoreBoard = add([_kaboom.default.text(score), _kaboom.default.pos(30, 6), _kaboom.default.layer("ui"), {
+    value: score
   }]);
 
   var speedBoard = _kaboom.default.add([_kaboom.default.text("0", 25), _kaboom.default.pos(200, 28), _kaboom.default.layer("ui"), {
@@ -3341,15 +3333,14 @@ _kaboom.default.scene("index", function (_ref) {
   player.collides("carrot", function (c) {
     _kaboom.default.destroy(c);
 
-    SPEED += 100;
-    JUMP += 50;
+    powerUpAudio.play();
+    JUMP += 75;
     scoreBoard.value += 200;
     scoreBoard.text = scoreBoard.value;
-    speedBoard.value += 100;
-    speedBoard.text = speedBoard.value;
   }), player.collides("strawberry", function (s) {
     _kaboom.default.destroy(s);
 
+    powerUpAudio.play();
     SPEED += 50;
     scoreBoard.value += 100;
     scoreBoard.text = scoreBoard.value;
@@ -3358,31 +3349,38 @@ _kaboom.default.scene("index", function (_ref) {
   }), player.collides("cherry", function (b) {
     _kaboom.default.destroy(b);
 
-    SPEED += 50;
-    scoreBoard.value += 500;
+    powerUpAudio.play();
+    scoreBoard.value += 1000;
     scoreBoard.text = scoreBoard.value;
-    speedBoard.value += 50;
-    speedBoard.text = speedBoard.value;
   }), player.collides("dangerous", function (d) {
     _kaboom.default.destroy(d);
 
     if (scoreBoard.value <= 0) {
+      dieAudio2.play();
+
       _kaboom.default.go("lose", {
         score: score.value
+      });
+
+      _kaboom.default.start("index", {
+        score: 0
       }); // k.play("death1");
 
     } else {
+      hitAudio.play();
       scoreBoard.value -= 100;
       scoreBoard.text = scoreBoard.value;
     }
   }, player.collides("danger", function (m) {
     _kaboom.default.destroy(m);
 
+    hitAudio.play();
     scoreBoard.value += 100;
     scoreBoard.text = scoreBoard.value;
   }), player.collides("cameron", function (r) {
     _kaboom.default.destroy(r);
 
+    hitAudio.play();
     scoreBoard.value -= 300;
     scoreBoard.text = scoreBoard.value;
   }), //////////////////////////// PLAYER CONTROLS ////////////////////////////
@@ -3404,34 +3402,37 @@ _kaboom.default.scene("index", function (_ref) {
     _kaboom.default.solid();
 
     if (player.pos.y >= FALL) {
+      gameAudio.pause();
+      dieAudio.play();
+
       _kaboom.default.go("lose", {
-        score: score.value
+        score: scoreBoard.value
       });
     }
   }), _kaboom.default.action("strawberry", function (d) {
-    d.move(-10, 0);
+    d.move(20, 0);
   }), _kaboom.default.action("carrot", function (d) {
-    d.move(-10, 0);
+    d.move(20, 0);
   }), _kaboom.default.action("dangerous", function (d) {
-    d.move(-10, 0);
+    d.move(-100, 0);
   }), _kaboom.default.action("danger", function (d) {
-    d.move(-15, 0);
+    d.move(-30, 0);
   }), _kaboom.default.action("cameron", function (l) {
-    l.move(-15, 0);
+    l.move(-30, 0);
   }), _kaboom.default.keyDown("space", function () {
     _kaboom.default.solid();
 
-    player.grounded() ? player.jump(JUMP) : null;
+    player.grounded() ? player.jump(JUMP) & jumpAudio.play() : null;
   }));
 }, //////////////////////////// SCORE ////////////////////////////
 _kaboom.default.scene("lose", function (_ref2) {
   var score = _ref2.score;
 
   // console.log('score', score)
-  _kaboom.default.add([_kaboom.default.text("Score: " + score, 24), _kaboom.default.origin("center"), _kaboom.default.pos(_kaboom.default.width() / 2, _kaboom.default.height() / 2)]);
+  _kaboom.default.add([_kaboom.default.text('YOU LOSE! Your Score is: ' + score, 12), _kaboom.default.origin("center"), _kaboom.default.pos(_kaboom.default.width() / 2, _kaboom.default.height() / 2)]);
 }), _kaboom.default.start("index", {
   score: 0
-})));
+}));
 },{"./kaboom":"kaboom.js","./src/scenes/levels":"src/scenes/levels.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -3460,11 +3461,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-<<<<<<< Updated upstream
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51236" + '/');
-=======
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55675" + '/');
->>>>>>> Stashed changes
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56181" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
