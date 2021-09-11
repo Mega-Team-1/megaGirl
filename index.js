@@ -18,6 +18,8 @@ var dieAudio2 = new Audio("https://kaboomjs.com/sounds/weak.mp3");
 k.loadRoot("https://i.imgur.com/");
 
 k.loadSprite("bg", "3njZ5wc.png");
+k.loadSprite("front-brick", "LTk9L62.png");
+k.loadSprite("back-brick", "LTk9L62.png");
 k.loadSprite("strawberry", "kSq1gmD.png");
 k.loadSprite("cherry", "eslaY4x.png");
 k.loadSprite("flower", "ShYYu0G.png");
@@ -102,6 +104,8 @@ k.scene("index", ({ score }) => {
       height: 30,
       pos: k.vec2(-300, 50),
       origin: "center",
+      "~": [k.sprite("front-brick"), k.solid(), "front-brick"],
+      "&": [k.sprite("back-brick"), k.solid(),"back-brick"],
       "=": [k.sprite("flower"), k.solid()],
       "$": [k.sprite("strawberry"), k.solid(), "strawberry"],
       "+": [k.sprite("box"), k.solid(), "cherry-box"],
