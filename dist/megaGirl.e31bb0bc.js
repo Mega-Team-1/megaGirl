@@ -3190,8 +3190,10 @@ var _levels = require("./src/scenes/levels");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var speed = 200;
-var jump = 550;
+// import Animation from './src/scenes/animations';
+// import Collisions from './src/scenes/collisions';
+var SPEED = 200;
+var JUMP = 550;
 var FALL = 600;
 var gameAudio = new Audio("https://kaboomjs.com/sounds/OtherworldlyFoe.mp3");
 var dieAudio = new Audio("https://kaboomjs.com/sounds/explode.mp3");
@@ -3204,7 +3206,9 @@ _kaboom.default.loadRoot("https://i.imgur.com/");
 
 _kaboom.default.loadSprite("bg", "3njZ5wc.png");
 
-_kaboom.default.loadSprite("brick", "LTk9L62.png");
+_kaboom.default.loadSprite("front-brick", "LTk9L62.png");
+
+_kaboom.default.loadSprite("back-brick", "LTk9L62.png");
 
 _kaboom.default.loadSprite("strawberry", "kSq1gmD.png");
 
@@ -3267,16 +3271,11 @@ _kaboom.default.scene("index", function (_ref) {
 
   _kaboom.default.add([_kaboom.default.sprite("bg"), _kaboom.default.pos(_kaboom.default.vec2(7500, 210)), _kaboom.default.scale(_kaboom.default.width() / 600, _kaboom.default.height() / 280), _kaboom.default.layer("bg"), _kaboom.default.origin("right")]);
 
-<<<<<<< HEAD
-  var scoreBoard = _kaboom.default.add([_kaboom.default.text("Score:" + score, 20), _kaboom.default.pos(50, 0), _kaboom.default.layer("ui"), {
-    value: 0
-=======
   var scoreBoard = add([_kaboom.default.text(score), _kaboom.default.pos(30, 6), _kaboom.default.layer("ui"), {
     value: score
->>>>>>> 805ad59774e0cf4edbf2e3fcd3c354551246e7fc
   }]);
 
-  var speedBoard = _kaboom.default.add([_kaboom.default.text("Speed: 0", 20), _kaboom.default.pos(200, 0), _kaboom.default.layer("ui"), {
+  var speedBoard = _kaboom.default.add([_kaboom.default.text("0", 25), _kaboom.default.pos(200, 28), _kaboom.default.layer("ui"), {
     value: 0
   }]);
 
@@ -3293,7 +3292,8 @@ _kaboom.default.scene("index", function (_ref) {
     height: 30,
     pos: _kaboom.default.vec2(-300, 50),
     origin: "center",
-    "~": [_kaboom.default.sprite("brick"), _kaboom.default.solid()],
+    "~": [_kaboom.default.sprite("front-brick"), _kaboom.default.solid(), "front-brick"],
+    "&": [_kaboom.default.sprite("back-brick"), _kaboom.default.solid(), "back-brick"],
     "=": [_kaboom.default.sprite("flower"), _kaboom.default.solid()],
     "$": [_kaboom.default.sprite("strawberry"), _kaboom.default.solid(), "strawberry"],
     "+": [_kaboom.default.sprite("box"), _kaboom.default.solid(), "cherry-box"],
@@ -3309,7 +3309,7 @@ _kaboom.default.scene("index", function (_ref) {
   var gameLevel = _kaboom.default.addLevel(_levels.maps[0], mapLevel); //////////////////////////// COLLISIONS ////////////////////////////
 
 
-  var player = _kaboom.default.add([_kaboom.default.sprite("girl"), _kaboom.default.pos(50, height() / 2), _kaboom.default.origin("center"), _kaboom.default.body(), _kaboom.default.solid(), _kaboom.default.scale()]);
+  var player = _kaboom.default.add([_kaboom.default.sprite("girl"), _kaboom.default.pos(24, height() / 2), _kaboom.default.origin("center"), _kaboom.default.body(), _kaboom.default.solid(), _kaboom.default.scale()]);
 
   player.on("headbump", function (obj) {
     if (obj.is("strawberry-box")) {
@@ -3340,14 +3340,14 @@ _kaboom.default.scene("index", function (_ref) {
     _kaboom.default.destroy(c);
 
     powerUpAudio.play();
-    jump += 75;
+    JUMP += 75;
     scoreBoard.value += 200;
     scoreBoard.text = scoreBoard.value;
   }), player.collides("strawberry", function (s) {
     _kaboom.default.destroy(s);
 
     powerUpAudio.play();
-    speed += 50;
+    SPEED += 50;
     scoreBoard.value += 100;
     scoreBoard.text = scoreBoard.value;
     speedBoard.value += 50;
@@ -3370,7 +3370,8 @@ _kaboom.default.scene("index", function (_ref) {
 
       _kaboom.default.start("index", {
         score: 0
-      });
+      }); // k.play("death1");
+
     } else {
       hitAudio.play();
       scoreBoard.value -= 100;
@@ -3390,9 +3391,9 @@ _kaboom.default.scene("index", function (_ref) {
     scoreBoard.text = scoreBoard.value;
   }), //////////////////////////// PLAYER CONTROLS ////////////////////////////
   _kaboom.default.keyDown("left", function () {
-    player.move(-speed, 0);
+    player.move(-SPEED, 0);
   }), _kaboom.default.keyDown("right", function () {
-    player.move(speed, 0);
+    player.move(SPEED, 0);
   }), _kaboom.default.keyPress("right", function () {
     player.scale.x = 1;
     player.play("move");
@@ -3411,15 +3412,8 @@ _kaboom.default.scene("index", function (_ref) {
       dieAudio.play();
 
       _kaboom.default.go("lose", {
-<<<<<<< HEAD
-        score: score.value
-      });
-=======
-
         score: scoreBoard.value
       });
-
->>>>>>> 805ad59774e0cf4edbf2e3fcd3c354551246e7fc
     }
   }), _kaboom.default.action("strawberry", function (d) {
     d.move(20, 0);
@@ -3434,20 +3428,14 @@ _kaboom.default.scene("index", function (_ref) {
   }), _kaboom.default.keyDown("space", function () {
     _kaboom.default.solid();
 
-    player.grounded() ? player.jump(jump) & jumpAudio.play() : null;
+    player.grounded() ? player.jump(JUMP) & jumpAudio.play() : null;
   }));
 }, //////////////////////////// SCORE ////////////////////////////
 _kaboom.default.scene("lose", function (_ref2) {
   var score = _ref2.score;
 
-<<<<<<< HEAD
-  _kaboom.default.add([_kaboom.default.text("Score: " + score, 24), _kaboom.default.origin("center"), _kaboom.default.pos(_kaboom.default.width() / 2, _kaboom.default.height() / 2)]);
-=======
   // console.log('score', score)
->>>>>>> 805ad59774e0cf4edbf2e3fcd3c354551246e7fc
-
   _kaboom.default.add([_kaboom.default.text('YOU LOSE! Your Score is: ' + score, 12), _kaboom.default.origin("center"), _kaboom.default.pos(_kaboom.default.width() / 2, _kaboom.default.height() / 2)]);
-
 }), _kaboom.default.start("index", {
   score: 0
 }));
@@ -3479,12 +3467,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-<<<<<<< HEAD
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51504" + '/');
-=======
-
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56181" + '/');
->>>>>>> 805ad59774e0cf4edbf2e3fcd3c354551246e7fc
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50150" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
