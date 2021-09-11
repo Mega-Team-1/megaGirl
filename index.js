@@ -1,22 +1,23 @@
 import k from "./kaboom";
 import { maps } from "./src/scenes/levels";
+// import Animation from './src/scenes/animations';
+// import Collisions from './src/scenes/collisions';
 
-let speed = 200;
-let jump = 550;
+let SPEED = 200;
+let JUMP = 550;
 const FALL = 600;
-const gameAudio = new Audio("https://kaboomjs.com/sounds/OtherworldlyFoe.mp3");
-const dieAudio = new Audio("https://kaboomjs.com/sounds/explode.mp3");
-const jumpAudio = new Audio("https://kaboomjs.com/sounds/powerup.mp3");
-const powerUpAudio = new Audio("https://kaboomjs.com/sounds/score.mp3");
-const hitAudio = new Audio("https://kaboomjs.com/sounds/hit.mp3");
-const dieAudio2 = new Audio("https://kaboomjs.com/sounds/weak.mp3");
+var gameAudio = new Audio("https://kaboomjs.com/sounds/OtherworldlyFoe.mp3");
+var dieAudio = new Audio("https://kaboomjs.com/sounds/explode.mp3");
+var jumpAudio = new Audio("https://kaboomjs.com/sounds/powerup.mp3");
+var powerUpAudio = new Audio("https://kaboomjs.com/sounds/score.mp3");
+var hitAudio = new Audio("https://kaboomjs.com/sounds/hit.mp3");
+var dieAudio2 = new Audio("https://kaboomjs.com/sounds/weak.mp3");
 
 //////////////////////////// ASSETS ////////////////////////////
 
 k.loadRoot("https://i.imgur.com/");
 
 k.loadSprite("bg", "3njZ5wc.png");
-k.loadSprite("brick", "LTk9L62.png");
 k.loadSprite("strawberry", "kSq1gmD.png");
 k.loadSprite("cherry", "eslaY4x.png");
 k.loadSprite("flower", "ShYYu0G.png");
@@ -51,7 +52,7 @@ k.loadSprite("girl", "WngO9Ry.png", {
     idle: { from: 1, to: 1 },
   },
 }),
-//////////////////////////// SCENE ////////////////////////////
+  //////////////////////////// SCENE ////////////////////////////
 
 k.scene("index", ({ score }) => {
   gameAudio.play();
@@ -66,16 +67,20 @@ k.scene("index", ({ score }) => {
       k.origin("right")
     ]);
 
-    const scoreBoard = k.add([
-      k.text("Score:" + score, 20),
-      k.pos(50, 0),
+    const scoreBoard =
+    add([
+      k.text(score),
+      k.pos(30, 6),
       k.layer("ui"),
-      { value: 0, },
+      {
+        value: score,
+      },
     ]);
 
+
     const speedBoard = k.add([
-      k.text("Speed: 0", 20),
-      k.pos(200, 0),
+      k.text("0", 25),
+      k.pos(200, 28),
       k.layer("ui"),
       { value: 0, },
     ]);
@@ -97,7 +102,6 @@ k.scene("index", ({ score }) => {
       height: 30,
       pos: k.vec2(-300, 50),
       origin: "center",
-      "~": [k.sprite("brick"), k.solid()],
       "=": [k.sprite("flower"), k.solid()],
       "$": [k.sprite("strawberry"), k.solid(), "strawberry"],
       "+": [k.sprite("box"), k.solid(), "cherry-box"],
@@ -116,7 +120,7 @@ k.scene("index", ({ score }) => {
 
     const player = k.add([
       k.sprite("girl"),
-      k.pos(50, height() / 2),
+      k.pos(24, height() / 2),
       k.origin("center"),
       k.body(),
       k.solid(),
@@ -144,7 +148,7 @@ k.scene("index", ({ score }) => {
     player.collides("carrot", (c) => {
       k.destroy(c);
       powerUpAudio.play();
-      jump += 75;
+      JUMP += 75;
       scoreBoard.value += 200;
       scoreBoard.text = scoreBoard.value;
     }),
@@ -152,7 +156,7 @@ k.scene("index", ({ score }) => {
     player.collides("strawberry", (s) => {
       k.destroy(s);
       powerUpAudio.play();
-      speed += 50;
+      SPEED += 50;
       scoreBoard.value += 100;
       scoreBoard.text = scoreBoard.value;
       speedBoard.value += 50;
@@ -172,6 +176,8 @@ k.scene("index", ({ score }) => {
         dieAudio2.play();
         k.go("lose", { score: score.value });
         k.start("index", { score: 0 });
+
+         // k.play("death1");
       } else {
         hitAudio.play();
         scoreBoard.value -= 100;
@@ -196,11 +202,11 @@ k.scene("index", ({ score }) => {
     //////////////////////////// PLAYER CONTROLS ////////////////////////////
 
     k.keyDown("left", () => {
-      player.move(-speed, 0);
+      player.move(-SPEED, 0);
     }),
 
     k.keyDown("right", () => {
-      player.move(speed, 0);
+      player.move(SPEED, 0);
     }),
 
     k.keyPress("right", () => {
@@ -223,7 +229,9 @@ k.scene("index", ({ score }) => {
       if (player.pos.y >= FALL) {
         gameAudio.pause();
         dieAudio.play();
-        k.go("lose", { score: score.value });
+
+        k.go("lose", { score: scoreBoard.value });
+
       }
     }),
 
@@ -249,19 +257,23 @@ k.scene("index", ({ score }) => {
 
     k.keyDown("space", () => {
       k.solid();
-      player.grounded() ? player.jump(jump) & jumpAudio.play() : null;
+      player.grounded() ? player.jump(JUMP) & jumpAudio.play() : null;
     })
   )},
 
 //////////////////////////// SCORE ////////////////////////////
 
 k.scene("lose", ({ score }) => {
+  // console.log('score', score)
   k.add([
-    k.text("Score: " + score, 24),
+    k.text('YOU LOSE! Your Score is: ' + score, 12),
     k.origin("center"),
     k.pos(k.width() / 2, k.height() / 2),
+
+
   ])
-  k.go('index', { score: 0 });
+
+
 }),
 
 k.start("index", { score: 0 }))

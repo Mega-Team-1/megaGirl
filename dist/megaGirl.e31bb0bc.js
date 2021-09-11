@@ -3267,8 +3267,13 @@ _kaboom.default.scene("index", function (_ref) {
 
   _kaboom.default.add([_kaboom.default.sprite("bg"), _kaboom.default.pos(_kaboom.default.vec2(7500, 210)), _kaboom.default.scale(_kaboom.default.width() / 600, _kaboom.default.height() / 280), _kaboom.default.layer("bg"), _kaboom.default.origin("right")]);
 
+<<<<<<< HEAD
   var scoreBoard = _kaboom.default.add([_kaboom.default.text("Score:" + score, 20), _kaboom.default.pos(50, 0), _kaboom.default.layer("ui"), {
     value: 0
+=======
+  var scoreBoard = add([_kaboom.default.text(score), _kaboom.default.pos(30, 6), _kaboom.default.layer("ui"), {
+    value: score
+>>>>>>> 805ad59774e0cf4edbf2e3fcd3c354551246e7fc
   }]);
 
   var speedBoard = _kaboom.default.add([_kaboom.default.text("Speed: 0", 20), _kaboom.default.pos(200, 0), _kaboom.default.layer("ui"), {
@@ -3406,8 +3411,15 @@ _kaboom.default.scene("index", function (_ref) {
       dieAudio.play();
 
       _kaboom.default.go("lose", {
+<<<<<<< HEAD
         score: score.value
       });
+=======
+
+        score: scoreBoard.value
+      });
+
+>>>>>>> 805ad59774e0cf4edbf2e3fcd3c354551246e7fc
     }
   }), _kaboom.default.action("strawberry", function (d) {
     d.move(20, 0);
@@ -3428,11 +3440,14 @@ _kaboom.default.scene("index", function (_ref) {
 _kaboom.default.scene("lose", function (_ref2) {
   var score = _ref2.score;
 
+<<<<<<< HEAD
   _kaboom.default.add([_kaboom.default.text("Score: " + score, 24), _kaboom.default.origin("center"), _kaboom.default.pos(_kaboom.default.width() / 2, _kaboom.default.height() / 2)]);
+=======
+  // console.log('score', score)
+>>>>>>> 805ad59774e0cf4edbf2e3fcd3c354551246e7fc
 
-  _kaboom.default.go('index', {
-    score: 0
-  });
+  _kaboom.default.add([_kaboom.default.text('YOU LOSE! Your Score is: ' + score, 12), _kaboom.default.origin("center"), _kaboom.default.pos(_kaboom.default.width() / 2, _kaboom.default.height() / 2)]);
+
 }), _kaboom.default.start("index", {
   score: 0
 }));
@@ -3464,7 +3479,12 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+<<<<<<< HEAD
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "51504" + '/');
+=======
+
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56181" + '/');
+>>>>>>> 805ad59774e0cf4edbf2e3fcd3c354551246e7fc
 
   ws.onmessage = function (event) {
     checkedAssets = {};
