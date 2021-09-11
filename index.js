@@ -67,12 +67,16 @@ k.scene("index", ({ score }) => {
       k.origin("right")
     ]);
 
-    const scoreBoard = k.add([
-      k.text("0", 25),
-      k.pos(20, 28),
+    const scoreBoard =
+    add([
+      k.text(score),
+      k.pos(30, 6),
       k.layer("ui"),
-      { value: 0, },
+      {
+        value: score,
+      },
     ]);
+
 
     const speedBoard = k.add([
       k.text("0", 25),
@@ -172,7 +176,7 @@ k.scene("index", ({ score }) => {
         dieAudio2.play();
         k.go("lose", { score: score.value });
         k.start("index", { score: 0 });
-        
+
          // k.play("death1");
       } else {
         hitAudio.play();
@@ -225,8 +229,9 @@ k.scene("index", ({ score }) => {
       if (player.pos.y >= FALL) {
         gameAudio.pause();
         dieAudio.play();
-        k.go("lose", { score: score.value });
-        // k.start("index", { score: 0 })
+
+        k.go("lose", { score: scoreBoard.value });
+
       }
     }),
 
@@ -261,12 +266,14 @@ k.scene("index", ({ score }) => {
 k.scene("lose", ({ score }) => {
   // console.log('score', score)
   k.add([
-    k.text("Score: " + score, 24),
+    k.text('YOU LOSE! Your Score is: ' + score, 12),
     k.origin("center"),
     k.pos(k.width() / 2, k.height() / 2),
-  
+
+
   ])
-  k.go('index', { score: 0 });
+
+
 }),
 
 k.start("index", { score: 0 }))
