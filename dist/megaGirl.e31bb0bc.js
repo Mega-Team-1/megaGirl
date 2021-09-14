@@ -3175,7 +3175,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.maps = void 0;
 // import k from '../../kaboom';
-var maps = [['~                                                                                                                                                                                                                                                                                                                                                                                                                                                                        &', '~                   =======                                  %%                       ======                                                        ======                                                     ======                                              %+*%         y                                                                                                y                                                                                       &', '~                                                                                                                                                      %                            =====                                                                                                       ==     ==     ==     ==     ==                                                                                                                                           &', '~         ======                                =======                                                  ======                        ======                                                                         ==           ==                      ==                  =============                                                                %%%+                                                                                                         &', '~                                                                         ^                                                                                        ==============                                                             =====                                                             =======     =======                                                                         ==============================================================', '~                                                                      =============                                                                          z =                         ==============                                                       ==================                                                                                                                                                                                        &', '~     %      %       %       %       %                ==========                                                                                 =================                                            =====                                                                                                                                 =============================================                                                                        &', '~                                                                                   =======                                                                                                                                                                                                                                                                                                                                                                              &', '~                                         ====                                               ==========                   z          =======                                                                       ===      =============                                                                                                                                                                                                                                &', '~                                                                                                             ==============                                                 ======                                                                                                                                                                                                                                                                                      &', '~                                                                                                                                                      ======                                       ', '~                                                                           ======                                    ^                                                                               ', '  ======================================                    ======                                            ===================']];
+var maps = [['~                                                                                                                                                                                                                                                                                                                                                                                                                                                                        &', '~                   =======                                  %%                       ======                                                        ======                                                     ======                                              %+*%         y                                                                                                y                                                                                       &', '~                                                                                                                                                      %                            =====                                                                                                       ==     ==     ==     ==     ==                                                                                                                                           &', '~         ======                                =======                                                  ======                        ======                                                                         ==           ==                      ==                  =============                                                                %%%+                                                                                                         &', '~                                                                         ^                                                                                        ==============                                                             =====                                                             =======     =======                                                                         ==============================================================', '~                                                                      =============                                                                          z =                         ==============                                                       ==================                                                                                                                                                                                        &', '~     %      *       %       *       %                ==========                                                                                 =================                                            =====                                                                                                                                 =============================================                                                                        &', '~                                                                                   =======                                                                                                                                                                                                                                                                                                                                                                              &', '~                                         ====                                               ==========                   z          =======                                                                       ===      =============                                                                                                                                                                                                                                &', '~                                                                                                             ==============                                                 ======                                                                                                                                                                                                                                                                                      &', '~                                                                                                                                                      ======                                       ', '~                                                                           ======                                    ^                                                                               ', '  ======================================                    ======                                            ===================']];
 exports.maps = maps;
 },{}],"index.js":[function(require,module,exports) {
 "use strict";
@@ -3188,6 +3188,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var speed = 200;
 var jump = 550;
+var totalScore = 0;
 var FALL = 600;
 var gameAudio = new Audio("https://kaboomjs.com/sounds/OtherworldlyFoe.mp3");
 var dieAudio = new Audio("https://kaboomjs.com/sounds/explode.mp3");
@@ -3238,8 +3239,8 @@ _kaboom.default.loadSprite("girl", "WngO9Ry.png", {
 }); // add scene
 
 
-_kaboom.default.scene("index", function (_ref) {
-  var score = _ref.score;
+_kaboom.default.scene("index", function (score) {
+  totalScore = 0;
   gameAudio.play();
 
   _kaboom.default.layers(["bg", "obj", "ui"], "obj"); // image background
@@ -3247,7 +3248,9 @@ _kaboom.default.scene("index", function (_ref) {
 
   _kaboom.default.add([_kaboom.default.sprite("bg"), _kaboom.default.pos(_kaboom.default.vec2(7500, 210)), _kaboom.default.scale(_kaboom.default.width() / 600, _kaboom.default.height() / 280), _kaboom.default.layer("bg"), _kaboom.default.origin("right")]);
 
-  var scoreLabel = _kaboom.default.add([_kaboom.default.text("Score: " + score), _kaboom.default.pos(24, 29), _kaboom.default.layer("ui"), {
+  var player = _kaboom.default.add([_kaboom.default.sprite("girl"), _kaboom.default.pos(24, height() / 2), _kaboom.default.origin("center"), _kaboom.default.body(), _kaboom.default.solid(), _kaboom.default.scale()]);
+
+  var scoreLabel = _kaboom.default.add([_kaboom.default.camIgnore(['ui']), _kaboom.default.text("Score: " + score), _kaboom.default.pos(40, 24), _kaboom.default.layer("ui"), {
     value: score
   }]);
 
@@ -3274,8 +3277,6 @@ _kaboom.default.scene("index", function (_ref) {
   var level = _kaboom.default.addLevel(_levels.maps[0], mapLevel); // add collisions
 
 
-  var player = _kaboom.default.add([_kaboom.default.sprite("girl"), _kaboom.default.pos(24, height() / 2), _kaboom.default.origin("center"), _kaboom.default.body(), _kaboom.default.solid(), _kaboom.default.scale()]);
-
   player.on("headbump", function (obj) {
     if (obj.is("strawberry-box")) {
       level.spawn("$", obj.gridPos.sub(0, 1));
@@ -3286,7 +3287,7 @@ _kaboom.default.scene("index", function (_ref) {
     }
 
     if (obj.is("carrot-box")) {
-      level.spawn("*", obj.gridPos.sub(0, 1));
+      level.spawn("#", obj.gridPos.sub(0, 1));
 
       _kaboom.default.destroy(obj);
 
@@ -3308,6 +3309,7 @@ _kaboom.default.scene("index", function (_ref) {
     jump += 75;
     scoreLabel.value += 200;
     scoreLabel.text = "Score: " + scoreLabel.value;
+    totalScore = scoreLabel.value;
   }), player.collides("strawberry", function (s) {
     _kaboom.default.destroy(s);
 
@@ -3315,29 +3317,28 @@ _kaboom.default.scene("index", function (_ref) {
     speed += 50;
     scoreLabel.value += 100;
     scoreLabel.text = "Score: " + scoreLabel.value;
+    totalScore = scoreLabel.value;
   }), player.collides("cherry", function (b) {
     _kaboom.default.destroy(b);
 
     powerUpAudio.play();
     scoreLabel.value += 1000;
     scoreLabel.text = "Score: " + scoreLabel.value;
+    totalScore = scoreLabel.value;
   }), player.collides("spiky", function (d) {
     _kaboom.default.destroy(d);
 
     if (scoreLabel.value < 0) {
       dieAudio2.play();
 
-      _kaboom.default.go("lose", {
-        Score: scoreLabel.value
-      });
+      _kaboom.default.go("lose", score);
 
-      _kaboom.default.start("index", {
-        Score: 0
-      });
+      _kaboom.default.start("index", 0);
     } else {
       hitAudio.play();
       scoreLabel.value -= 100;
       scoreLabel.text = "Score: " + scoreLabel.value;
+      totalScore = scoreLabel.value;
     }
   }, player.collides("sammie", function (m) {
     _kaboom.default.destroy(m);
@@ -3345,16 +3346,16 @@ _kaboom.default.scene("index", function (_ref) {
     hitAudio.play();
     scoreLabel.value += 100;
     scoreLabel.text = "Score: " + scoreLabel.value;
+    totalScore = scoreLabel.value;
   }), player.collides("cameron", function (r) {
     _kaboom.default.destroy(r);
 
     hitAudio.play();
     scoreLabel.value -= 300;
     scoreLabel.text = "Score: " + scoreLabel.value;
+    totalScore = scoreLabel.value;
   }), player.collides("back-brick", function (w) {
-    _kaboom.default.go("win", {
-      Score: scoreLabel.value
-    });
+    _kaboom.default.go("win", score);
   }), // player controls
   _kaboom.default.keyDown("left", function () {
     player.move(-speed, 0);
@@ -3374,12 +3375,9 @@ _kaboom.default.scene("index", function (_ref) {
     _kaboom.default.solid();
 
     if (player.pos.y >= FALL) {
-      gameAudio.pause();
-      dieAudio.play();
+      gameAudio.pause(); // dieAudio.play();
 
-      _kaboom.default.go("lose", {
-        Score: scoreLabel.value
-      });
+      _kaboom.default.go("lose", totalScore);
     }
   }), _kaboom.default.action("strawberry", function (d) {
     d.move(30, 0);
@@ -3397,16 +3395,23 @@ _kaboom.default.scene("index", function (_ref) {
 
     player.grounded() ? player.jump(jump) & jumpAudio.play() : null;
   }));
-}, _kaboom.default.scene("lose", function (_ref2) {
-  var score = _ref2.score;
-
+}, _kaboom.default.scene("lose", function (score) {
   _kaboom.default.add([_kaboom.default.text('YOU LOSE! Your Score is: ' + score, 12), _kaboom.default.origin("center"), _kaboom.default.pos(_kaboom.default.width() / 2, _kaboom.default.height() / 2)]);
-}), _kaboom.default.scene("win", function (_ref3) {
-  var score = _ref3.score;
-  return _kaboom.default.add([_kaboom.default.text('YOU WIN! Your Score is: ' + score, 12), _kaboom.default.origin("center"), _kaboom.default.pos(_kaboom.default.width() / 2, _kaboom.default.height() / 2)]);
-}), _kaboom.default.start("index", {
-  score: 0
-}));
+
+  totalScore = 0;
+
+  _kaboom.default.keyPress("space", function () {
+    return _kaboom.default.go("index", 0);
+  });
+
+  _kaboom.default.mouseClick(function () {
+    return _kaboom.default.go("index", 0);
+  });
+}), _kaboom.default.scene("win", function (score) {
+  _kaboom.default.add([_kaboom.default.text('YOU WIN! Your Score is: ' + score, 12), _kaboom.default.origin("center"), _kaboom.default.pos(_kaboom.default.width() / 2, _kaboom.default.height() / 2)]);
+
+  totalScore = 0;
+}), _kaboom.default.start("index", 0));
 },{"./kaboom":"kaboom.js","./src/scenes/levels":"src/scenes/levels.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -3435,7 +3440,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52678" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61235" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

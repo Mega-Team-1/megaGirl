@@ -3,6 +3,7 @@ import { maps } from "./src/scenes/levels";
 
 let speed = 200;
 let jump = 550;
+let totalScore = 0;
 const FALL = 600;
 const gameAudio = new Audio("https://kaboomjs.com/sounds/OtherworldlyFoe.mp3");
 const dieAudio = new Audio("https://kaboomjs.com/sounds/explode.mp3");
@@ -37,7 +38,8 @@ k.loadSprite("girl", "WngO9Ry.png", {
 });
 
 // add scene
-k.scene("index", ({ score }) => {
+k.scene("index", (score ) => {
+  totalScore = 0;
   gameAudio.play();
     k.layers(["bg", "obj", "ui"], "obj");
 
@@ -50,10 +52,20 @@ k.scene("index", ({ score }) => {
       k.origin("right")
     ]);
 
+    const player = k.add([
+      k.sprite("girl"),
+      k.pos(24, height() / 2),
+      k.origin("center"),
+      k.body(),
+      k.solid(),
+      k.scale(),
+    ]);
+
     const scoreLabel =
     k.add([
+      k.camIgnore(['ui']),
       k.text("Score: " + score),
-      k.pos(24, 29),
+      k.pos(40, 24),
       k.layer("ui"),
       { value: score }
     ]);
@@ -81,15 +93,6 @@ k.scene("index", ({ score }) => {
     const level = k.addLevel(maps[0], mapLevel);
 
     // add collisions
-    const player = k.add([
-      k.sprite("girl"),
-      k.pos(24, height() / 2),
-      k.origin("center"),
-      k.body(),
-      k.solid(),
-      k.scale(),
-    ]);
-
     player.on("headbump", (obj) => {
       if (obj.is("strawberry-box")) {
         level.spawn("$", obj.gridPos.sub(0, 1));
@@ -97,7 +100,7 @@ k.scene("index", ({ score }) => {
         level.spawn("}", obj.gridPos.sub(0, 0));
       }
       if (obj.is("carrot-box")) {
-        level.spawn("*", obj.gridPos.sub(0, 1));
+        level.spawn("#", obj.gridPos.sub(0, 1));
         k.destroy(obj);
         level.spawn("}", obj.gridPos.sub(0, 0));
       }
@@ -114,6 +117,7 @@ k.scene("index", ({ score }) => {
       jump += 75;
       scoreLabel.value += 200;
       scoreLabel.text = "Score: " + scoreLabel.value;
+      totalScore = scoreLabel.value;
     }),
 
     player.collides("strawberry", (s) => {
@@ -122,6 +126,7 @@ k.scene("index", ({ score }) => {
       speed += 50;
       scoreLabel.value += 100;
       scoreLabel.text = "Score: " + scoreLabel.value;
+      totalScore = scoreLabel.value;
     }),
 
     player.collides("cherry", (b) => {
@@ -129,18 +134,20 @@ k.scene("index", ({ score }) => {
       powerUpAudio.play();
       scoreLabel.value += 1000;
       scoreLabel.text = "Score: " + scoreLabel.value;
+      totalScore = scoreLabel.value;
     }),
 
     player.collides("spiky", (d) => {
       k.destroy(d);
       if (scoreLabel.value < 0) {
         dieAudio2.play();
-        k.go("lose", { Score: scoreLabel.value });
-        k.start("index", { Score: 0 });
+        k.go("lose", score);
+        k.start("index",0);
       } else {
         hitAudio.play();
         scoreLabel.value -= 100;
         scoreLabel.text = "Score: " + scoreLabel.value;
+        totalScore = scoreLabel.value;
       }
     },
 
@@ -149,6 +156,7 @@ k.scene("index", ({ score }) => {
       hitAudio.play();
       scoreLabel.value += 100;
       scoreLabel.text = "Score: " + scoreLabel.value;
+      totalScore = scoreLabel.value;
     }),
 
     player.collides("cameron", (r) => {
@@ -156,10 +164,11 @@ k.scene("index", ({ score }) => {
       hitAudio.play();
       scoreLabel.value -= 300;
       scoreLabel.text = "Score: " + scoreLabel.value;
+      totalScore = scoreLabel.value;
     }),
 
     player.collides("back-brick", (w) => {
-      k.go("win", { Score: scoreLabel.value });
+      k.go("win", score);
     }),
 
     // player controls
@@ -186,12 +195,13 @@ k.scene("index", ({ score }) => {
     }),
 
     player.action(() => {
+
       k.camPos(player.pos);
       k.solid();
       if (player.pos.y >= FALL) {
         gameAudio.pause();
-        dieAudio.play();
-        k.go("lose", { Score: scoreLabel.value });
+        // dieAudio.play();
+        k.go("lose", totalScore);
       }
     }),
 
@@ -221,19 +231,26 @@ k.scene("index", ({ score }) => {
     })
   )},
 
-k.scene("lose", ({ score }) => {
-  k.add([
-    k.text('YOU LOSE! Your Score is: ' + score, 12),
-    k.origin("center"),
-    k.pos(k.width() / 2, k.height() / 2),
-  ])
-}),
 
-k.scene("win", ({ score }) =>
-  k.add([
-    k.text('YOU WIN! Your Score is: ' + score, 12),
-    k.origin("center"),
-    k.pos(k.width() / 2, k.height() / 2),
-  ])),
+  k.scene("lose", (score) => {
+    k.add([
+      k.text('YOU LOSE! Your Score is: ' + score, 12),
+      k.origin("center"),
+      k.pos(k.width() / 2, k.height() / 2),
+    ])
+    totalScore = 0;
+    k.keyPress("space", () => k.go("index",  0 ));
+    k.mouseClick(() => k.go("index", 0 ));
+  }),
 
-k.start("index", { score: 0 }))
+
+  k.scene("win", (score) => {
+    k.add([
+      k.text('YOU WIN! Your Score is: ' + score, 12),
+      k.origin("center"),
+      k.pos(k.width() / 2, k.height() / 2),
+    ])
+    totalScore = 0;
+  }),
+
+k.start("index", 0))
