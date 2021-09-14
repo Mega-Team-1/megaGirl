@@ -38,7 +38,7 @@ k.loadSprite("girl", "WngO9Ry.png", {
 });
 
 // add scene
-k.scene("index", (score ) => {
+k.scene("index", ( score ) => {
   totalScore = 0;
   gameAudio.play();
     k.layers(["bg", "obj", "ui"], "obj");
@@ -59,13 +59,13 @@ k.scene("index", (score ) => {
       k.body(),
       k.solid(),
       k.scale(),
-    ]);
+    ], speed = 200, jump = 550);
 
     const scoreLabel =
     k.add([
       k.camIgnore(['ui']),
       k.text("Score: " + score),
-      k.pos(40, 24),
+      k.pos(120, 24),
       k.layer("ui"),
       { value: score }
     ]);
@@ -145,30 +145,36 @@ k.scene("index", (score ) => {
         k.start("index",0);
       } else {
         hitAudio.play();
-        scoreLabel.value -= 100;
-        scoreLabel.text = "Score: " + scoreLabel.value;
-        totalScore = scoreLabel.value;
+        if (scoreLabel.value >= 100) {
+          scoreLabel.value -= 100;
+          scoreLabel.text = "Score: " + scoreLabel.value;
+          totalScore = scoreLabel.value;
+        } else {
+          k.go("lose", score);
+        }
       }
     },
 
     player.collides("sammie", (m) => {
       k.destroy(m);
       hitAudio.play();
-      scoreLabel.value += 100;
-      scoreLabel.text = "Score: " + scoreLabel.value;
-      totalScore = scoreLabel.value;
+      speed -= 50;
     }),
 
     player.collides("cameron", (r) => {
       k.destroy(r);
       hitAudio.play();
+      if (scoreLabel.value >= 300) {
       scoreLabel.value -= 300;
       scoreLabel.text = "Score: " + scoreLabel.value;
-      totalScore = scoreLabel.value;
+      totalScore = scoreLabel.value
+      } else {
+        k.go("lose", score);
+      }
     }),
 
     player.collides("back-brick", (w) => {
-      k.go("win", score);
+      k.go("win", totalScore);
     }),
 
     // player controls
@@ -195,7 +201,6 @@ k.scene("index", (score ) => {
     }),
 
     player.action(() => {
-
       k.camPos(player.pos);
       k.solid();
       if (player.pos.y >= FALL) {
@@ -217,10 +222,6 @@ k.scene("index", (score ) => {
       d.move(-100, 0);
     }),
 
-    // k.action("sammie", (d) => {
-    //   d.move(-50, 0);
-    // }),
-
     k.action("cameron", (l) => {
       l.move(-50, 0);
     }),
@@ -229,7 +230,7 @@ k.scene("index", (score ) => {
       k.solid();
       player.grounded() ? player.jump(jump) & jumpAudio.play() : null;
     })
-  )},
+)})
 
 
   k.scene("lose", (score) => {
@@ -251,6 +252,8 @@ k.scene("index", (score ) => {
       k.pos(k.width() / 2, k.height() / 2),
     ])
     totalScore = 0;
+    k.keyPress("space", () => k.go("index",  0 ));
+    k.mouseClick(() => k.go("index", 0 ));
   }),
 
-k.start("index", 0))
+k.start("index", 0);
