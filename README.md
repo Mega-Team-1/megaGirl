@@ -36,7 +36,7 @@ Love has infinite dimensions. Your video game will only have two.
 
 Please contact us with comments, questions, or suggestions on how to improve Mega Girl. - Pam & Kathy
 
-## Getting Started
+### Getting Started
 
 1. npm install
 
