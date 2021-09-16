@@ -1,5 +1,7 @@
 # Mega Girl
+
 ### Mintbean Hackathon - Requirements
+
 Love has infinite dimensions. Your video game will only have two.
 
 - You can build any game you'd like. Whether it's Tetris, Super Mario, Civilization, Diablo, Slime Volleyball (remember that?), or just a ball bouncing around on a screen, as long as it sticks to the following requirements:
@@ -16,24 +18,30 @@ Love has infinite dimensions. Your video game will only have two.
 
 ## Screenshots
 
+![GamePlay](megaGirl/public/gamePlay.png?raw=true)
 
-### Technologies Used: Kaboom.js, JavaScript
+![LandingPage](megaGirl/public/landingPage.png?raw=true)
+
+### Technologies Used: Kaboom.js, JavaScript & HTML
 
 ### Created by:
+
 ##### Pamela Jung
-[LinkedIn](https://www.linkedin.com/in/pamjung/)  [Github](https://github.com/pamify)
+
+[LinkedIn](https://www.linkedin.com/in/pamjung/) [Github](https://github.com/pamify)
 
 ##### Kathy Son
-[LinkedIn](https://www.linkedin.com/in/kathy-son/)  [Github](https://github.com/kson1128)
 
-Original background artwork provided by Kathy. Hope you enjoy!
+[LinkedIn](https://www.linkedin.com/in/kathy-son/) [Github](https://github.com/kson1128)
 
 Please contact us with comments, questions, or suggestions on how to improve Mega Girl. - Pam & Kathy
 
 ## Getting Started
 
-First, run the development server:
+1. npm install
 
-npm run start
+Run the development server:
+
+2. npm run start
 
 Open [http://localhost:8000](http://localhost:8000) with your browser to see the result.
