@@ -3155,8 +3155,8 @@ var _kaboom = _interopRequireDefault(require("kaboom"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var k = (0, _kaboom.default)({
-  width: 100,
-  height: 100,
+  width: 200,
+  height: 250,
   global: true,
   fullscreen: true,
   scale: 2,
@@ -3189,40 +3189,47 @@ var speed = 200;
 var jump = 550;
 var totalScore = 0;
 var FALL = 600;
-var gameAudio = new Audio("https://kaboomjs.com/sounds/OtherworldlyFoe.mp3");
-var dieAudio = new Audio("https://kaboomjs.com/sounds/explode.mp3");
-var jumpAudio = new Audio("https://kaboomjs.com/sounds/powerup.mp3");
-var powerUpAudio = new Audio("https://kaboomjs.com/sounds/score.mp3");
-var hitAudio = new Audio("https://kaboomjs.com/sounds/hit.mp3");
-var dieAudio2 = new Audio("https://kaboomjs.com/sounds/weak.mp3"); // load assets
+var gameAudio = new Audio('https://kaboomjs.com/sounds/OtherworldlyFoe.mp3');
+var dieAudio = new Audio('http://freesoundeffect.net/sites/default/files/casual-game-lose-sound-effect-45947266.mp3');
+var jumpAudio = new Audio('https://kaboomjs.com/sounds/powerup.mp3');
+var powerUpAudio = new Audio('https://kaboomjs.com/sounds/score.mp3');
+var hitAudio = new Audio('https://kaboomjs.com/sounds/hit.mp3'); // load assets
 
-_kaboom.default.loadRoot("https://i.imgur.com/");
+_kaboom.default.loadRoot('https://i.imgur.com/');
 
-_kaboom.default.loadSprite("bg", "3njZ5wc.png");
+_kaboom.default.loadSprite('heart', 'TEDyQAt.png');
 
-_kaboom.default.loadSprite("front-brick", "KjvaaeX.png");
+_kaboom.default.loadSprite('play', 'vu3SL7i.png');
 
-_kaboom.default.loadSprite("back-brick", "KjvaaeX.png");
+_kaboom.default.loadSprite('cover', 'GEdoi9G.png');
 
-_kaboom.default.loadSprite("strawberry", "kSq1gmD.png");
+_kaboom.default.loadSprite('bg', '3njZ5wc.png');
 
-_kaboom.default.loadSprite("cherry", "eslaY4x.png");
+_kaboom.default.loadSprite('front-brick', 'KjvaaeX.png');
 
-_kaboom.default.loadSprite("flower", "ShYYu0G.png");
+_kaboom.default.loadSprite('back-brick', 'KjvaaeX.png');
 
-_kaboom.default.loadSprite("carrot", "m0b6U3j.png");
+_kaboom.default.loadSprite('strawberry', 'kSq1gmD.png');
 
-_kaboom.default.loadSprite("box", "gesQ1KP.png");
+_kaboom.default.loadSprite('cherry', 'eslaY4x.png');
 
-_kaboom.default.loadSprite("unbox", "bdrLpi6.png");
+_kaboom.default.loadSprite('flower', 'ShYYu0G.png');
 
-_kaboom.default.loadSprite("cameron", "kdOJehp.png");
+_kaboom.default.loadSprite('carrot', 'z5armIL.png');
 
-_kaboom.default.loadSprite("sammie", "MQrzLsf.png");
+_kaboom.default.loadSprite('box', 'gesQ1KP.png');
 
-_kaboom.default.loadSprite("spiky", "9DBGgaU.png");
+_kaboom.default.loadSprite('unbox', 'bdrLpi6.png');
 
-_kaboom.default.loadSprite("girl", "WngO9Ry.png", {
+_kaboom.default.loadSprite('cameron', 'Pk4OKBn.png');
+
+_kaboom.default.loadSprite('flock', 'kdOJehp.png');
+
+_kaboom.default.loadSprite('sammie', 'ebtULI6.png');
+
+_kaboom.default.loadSprite('spiky', 'TO91JRH.png');
+
+_kaboom.default.loadSprite('girl', 'WngO9Ry.png', {
   sliceX: 10,
   sliceY: 6,
   anims: {
@@ -3235,21 +3242,86 @@ _kaboom.default.loadSprite("girl", "WngO9Ry.png", {
       to: 1
     }
   }
-}); // add scene
+});
+
+function addButton(txt, p, f) {
+  var btn = _kaboom.default.add([_kaboom.default.text(txt, 15), _kaboom.default.pos(p), _kaboom.default.scale(1), _kaboom.default.origin('center')]);
+
+  btn.clicks(f);
+  btn.hovers(function () {
+    var t = time() * 10;
+    btn.color = rgb(_kaboom.default.wave(0, 255, t), _kaboom.default.wave(0, 255, t + 2), _kaboom.default.wave(0, 255, t + 4));
+    btn.scale = vec2(1.2);
+  }, function () {
+    btn.scale = vec2(1);
+    btn.color = rgb();
+  });
+} // how to play scene
 
 
-_kaboom.default.scene("index", function (score) {
+_kaboom.default.scene('howto', function () {
+  var intro = _kaboom.default.add([_kaboom.default.pos(10, 20), _kaboom.default.text('Welcome to Mega Girl! \n \n To win, you will need \n to make it to the end \n of the level and touch \n the brick wall. You die \n if you fall off a platform \n or your score reaches 0. \n \n Good luck!\n')]);
+
+  var strawberryPic = _kaboom.default.add([_kaboom.default.pos(10, 120), _kaboom.default.sprite('strawberry')]);
+
+  var strawberryText = _kaboom.default.add([_kaboom.default.pos(40, 130), _kaboom.default.text(' +50 speed +100 points')]);
+
+  var carrotPic = _kaboom.default.add([_kaboom.default.pos(10, 160), _kaboom.default.sprite('carrot')]);
+
+  var carrotText = _kaboom.default.add([_kaboom.default.pos(40, 170), _kaboom.default.text(' +75 jump +200 points ')]);
+
+  var cherryPic = _kaboom.default.add([_kaboom.default.pos(10, 200), _kaboom.default.sprite('cherry')]);
+
+  var cherryText = _kaboom.default.add([_kaboom.default.pos(40, 210), _kaboom.default.text(' +1000 points')]);
+
+  var cameronPic = _kaboom.default.add([_kaboom.default.pos(10, 240), _kaboom.default.sprite('cameron')]);
+
+  var cameronText = _kaboom.default.add([_kaboom.default.pos(40, 250), _kaboom.default.text(' -300 points')]);
+
+  var spikyPic = _kaboom.default.add([_kaboom.default.pos(5, 280), _kaboom.default.sprite('spiky')]);
+
+  var spikyText = _kaboom.default.add([_kaboom.default.pos(40, 290), _kaboom.default.text(' -100 points')]);
+
+  var sammiePic = _kaboom.default.add([_kaboom.default.pos(5, 320), _kaboom.default.sprite('sammie')]);
+
+  var sammieText = _kaboom.default.add([_kaboom.default.pos(40, 330), _kaboom.default.text(' -50 speed')]);
+
+  addButton('PLAY GAME', _kaboom.default.vec2(375, 50), function () {
+    return _kaboom.default.go('index', 0);
+  });
+}); // landing scene
+
+
+_kaboom.default.scene('landing', function () {
+  var cover = _kaboom.default.add([_kaboom.default.sprite('cover'), _kaboom.default.pos(160, 40)]);
+
+  addButton('Start', _kaboom.default.vec2(475, 200), function () {
+    return _kaboom.default.go('index', 0);
+  });
+  addButton('How To Play', _kaboom.default.vec2(270, 200), function () {
+    return _kaboom.default.go('howto');
+  });
+
+  _kaboom.default.add([_kaboom.default.sprite('heart'), _kaboom.default.pos(318, 330)]);
+
+  var names = _kaboom.default.add([_kaboom.default.color(0, 0, 0), _kaboom.default.pos(240, 317), _kaboom.default.text('Built with Kaboom.js, JavaScript & HTML \n\nMade with    by Pamela Jung and Kathy Son')]);
+}); // main scene
+
+
+_kaboom.default.scene('index', function (score) {
   totalScore = 0;
   gameAudio.play();
 
-  _kaboom.default.layers(["bg", "obj", "ui"], "obj"); // image background
+  _kaboom.default.layers(['bg', 'obj', 'ui'], 'obj');
+
+  _kaboom.default.solid(); // image background
 
 
-  _kaboom.default.add([_kaboom.default.sprite("bg"), _kaboom.default.pos(_kaboom.default.vec2(7500, 210)), _kaboom.default.scale(_kaboom.default.width() / 600, _kaboom.default.height() / 280), _kaboom.default.layer("bg"), _kaboom.default.origin("right")]);
+  _kaboom.default.add([_kaboom.default.sprite('bg'), _kaboom.default.pos(_kaboom.default.vec2(7500, 210)), _kaboom.default.scale(_kaboom.default.width() / 600, _kaboom.default.height() / 280), _kaboom.default.layer('bg'), _kaboom.default.origin('right')]);
 
-  var player = _kaboom.default.add([_kaboom.default.sprite("girl"), _kaboom.default.pos(24, height() / 2), _kaboom.default.origin("center"), _kaboom.default.body(), _kaboom.default.solid(), _kaboom.default.scale()], speed = 200, jump = 550);
+  var player = _kaboom.default.add([_kaboom.default.sprite('girl'), _kaboom.default.pos(24, height() / 2), _kaboom.default.origin('center'), _kaboom.default.body(), _kaboom.default.solid(), _kaboom.default.scale()], speed = 200, jump = 550);
 
-  var scoreLabel = _kaboom.default.add([_kaboom.default.camIgnore(['ui']), _kaboom.default.text("Score: " + score), _kaboom.default.pos(120, 24), _kaboom.default.layer("ui"), {
+  var scoreLabel = _kaboom.default.add([_kaboom.default.camIgnore(['ui']), _kaboom.default.text('Score: ' + score), _kaboom.default.pos(120, 24), _kaboom.default.layer('ui'), _kaboom.default.color(0, 0, 0), {
     value: score
   }]);
 
@@ -3257,175 +3329,178 @@ _kaboom.default.scene("index", function (score) {
     width: 20,
     height: 30,
     pos: _kaboom.default.vec2(-300, 50),
-    origin: "center",
-    "~": [_kaboom.default.sprite("front-brick"), _kaboom.default.solid(), "front-brick"],
-    "&": [_kaboom.default.sprite("back-brick"), _kaboom.default.solid(), "back-brick"],
-    "=": [_kaboom.default.sprite("flower"), _kaboom.default.solid()],
-    "$": [_kaboom.default.sprite("strawberry"), _kaboom.default.solid(), "strawberry", _kaboom.default.body()],
-    "+": [_kaboom.default.sprite("cherry"), _kaboom.default.solid(), "cherry", _kaboom.default.body()],
-    "@": [_kaboom.default.sprite("box"), _kaboom.default.solid(), "cherry-box"],
-    "%": [_kaboom.default.sprite("box"), _kaboom.default.solid(), "strawberry-box"],
-    "*": [_kaboom.default.sprite("box"), _kaboom.default.solid(), "carrot-box"],
-    "}": [_kaboom.default.sprite("unbox"), _kaboom.default.solid()],
-    "^": [_kaboom.default.sprite("spiky"), _kaboom.default.solid(), "spiky"],
-    "y": [_kaboom.default.sprite("cameron"), _kaboom.default.solid(), "cameron"],
-    "z": [_kaboom.default.sprite("sammie"), _kaboom.default.solid(), "sammie"],
-    "#": [_kaboom.default.sprite("carrot"), _kaboom.default.solid(), "carrot", _kaboom.default.body()]
+    origin: 'center',
+    '~': [_kaboom.default.sprite('front-brick'), _kaboom.default.solid(), 'front-brick'],
+    '&': [_kaboom.default.sprite('back-brick'), _kaboom.default.solid(), 'back-brick'],
+    '=': [_kaboom.default.sprite('flower'), _kaboom.default.solid()],
+    $: [_kaboom.default.sprite('strawberry'), _kaboom.default.solid(), 'strawberry', _kaboom.default.body()],
+    '+': [_kaboom.default.sprite('cherry'), _kaboom.default.solid(), 'cherry', _kaboom.default.body()],
+    '@': [_kaboom.default.sprite('box'), _kaboom.default.solid(), 'cherry-box'],
+    '%': [_kaboom.default.sprite('box'), _kaboom.default.solid(), 'strawberry-box'],
+    '*': [_kaboom.default.sprite('box'), _kaboom.default.solid(), 'carrot-box'],
+    '}': [_kaboom.default.sprite('unbox'), _kaboom.default.solid()],
+    '^': [_kaboom.default.sprite('spiky'), _kaboom.default.solid(), 'spiky'],
+    y: [_kaboom.default.sprite('flock'), _kaboom.default.solid(), 'flock'],
+    z: [_kaboom.default.sprite('sammie'), _kaboom.default.solid(), 'sammie'],
+    '#': [_kaboom.default.sprite('carrot'), _kaboom.default.solid(), 'carrot', _kaboom.default.body()]
   };
 
-  var level = _kaboom.default.addLevel(_levels.maps[0], mapLevel); // add collisions
+  var level = _kaboom.default.addLevel(_levels.maps[0], mapLevel); // collisions
 
 
-  player.on("headbump", function (obj) {
-    if (obj.is("strawberry-box")) {
-      level.spawn("$", obj.gridPos.sub(0, 1));
+  player.on('headbump', function (obj) {
+    if (obj.is('strawberry-box')) {
+      level.spawn('$', obj.gridPos.sub(0, 1));
 
       _kaboom.default.destroy(obj);
 
-      level.spawn("}", obj.gridPos.sub(0, 0));
+      level.spawn('}', obj.gridPos.sub(0, 0));
     }
 
-    if (obj.is("carrot-box")) {
-      level.spawn("#", obj.gridPos.sub(0, 1));
+    if (obj.is('carrot-box')) {
+      level.spawn('#', obj.gridPos.sub(0, 1));
 
       _kaboom.default.destroy(obj);
 
-      level.spawn("}", obj.gridPos.sub(0, 0));
+      level.spawn('}', obj.gridPos.sub(0, 0));
     }
 
-    if (obj.is("cherry-box")) {
-      level.spawn("+", obj.gridPos.sub(0, 1));
+    if (obj.is('cherry-box')) {
+      level.spawn('+', obj.gridPos.sub(0, 1));
 
       _kaboom.default.destroy(obj);
 
-      level.spawn("}", obj.gridPos.sub(0, 0));
+      level.spawn('}', obj.gridPos.sub(0, 0));
     }
   });
-  player.collides("carrot", function (c) {
+  player.collides('carrot', function (c) {
     _kaboom.default.destroy(c);
 
     powerUpAudio.play();
     jump += 75;
     scoreLabel.value += 200;
-    scoreLabel.text = "Score: " + scoreLabel.value;
+    scoreLabel.text = 'Score: ' + scoreLabel.value;
     totalScore = scoreLabel.value;
-  }), player.collides("strawberry", function (s) {
+  }), player.collides('strawberry', function (s) {
     _kaboom.default.destroy(s);
 
     powerUpAudio.play();
     speed += 50;
     scoreLabel.value += 100;
-    scoreLabel.text = "Score: " + scoreLabel.value;
+    scoreLabel.text = 'Score: ' + scoreLabel.value;
     totalScore = scoreLabel.value;
-  }), player.collides("cherry", function (b) {
+  }), player.collides('cherry', function (b) {
     _kaboom.default.destroy(b);
 
     powerUpAudio.play();
     scoreLabel.value += 1000;
-    scoreLabel.text = "Score: " + scoreLabel.value;
+    scoreLabel.text = 'Score: ' + scoreLabel.value;
     totalScore = scoreLabel.value;
-  }), player.collides("spiky", function (d) {
+  }), player.collides('spiky', function (d) {
     _kaboom.default.destroy(d);
 
     if (scoreLabel.value < 0) {
-      dieAudio2.play();
+      dieAudio.play();
 
-      _kaboom.default.go("lose", score);
+      _kaboom.default.go('lose', score);
 
-      _kaboom.default.start("index", 0);
+      _kaboom.default.start('index', 0);
     } else {
       hitAudio.play();
 
       if (scoreLabel.value >= 100) {
         scoreLabel.value -= 100;
-        scoreLabel.text = "Score: " + scoreLabel.value;
+        scoreLabel.text = 'Score: ' + scoreLabel.value;
         totalScore = scoreLabel.value;
       } else {
-        _kaboom.default.go("lose", score);
+        _kaboom.default.go('lose', score);
       }
     }
-  }, player.collides("sammie", function (m) {
+  }, player.collides('sammie', function (m) {
     _kaboom.default.destroy(m);
 
     hitAudio.play();
     speed -= 50;
-  }), player.collides("cameron", function (r) {
+  }), player.collides('flock', function (r) {
     _kaboom.default.destroy(r);
 
     hitAudio.play();
 
     if (scoreLabel.value >= 300) {
       scoreLabel.value -= 300;
-      scoreLabel.text = "Score: " + scoreLabel.value;
+      scoreLabel.text = 'Score: ' + scoreLabel.value;
       totalScore = scoreLabel.value;
     } else {
-      _kaboom.default.go("lose", score);
+      dieAudio.play();
+
+      _kaboom.default.go('lose', score);
     }
-  }), player.collides("back-brick", function (w) {
-    _kaboom.default.go("win", totalScore);
+  }), player.collides('back-brick', function (w) {
+    _kaboom.default.go('win', totalScore);
   }), // player controls
-  _kaboom.default.keyDown("left", function () {
+  _kaboom.default.keyDown('left', function () {
     player.move(-speed, 0);
-  }), _kaboom.default.keyDown("right", function () {
+  }), _kaboom.default.keyDown('right', function () {
     player.move(speed, 0);
-  }), _kaboom.default.keyPress("right", function () {
+  }), _kaboom.default.keyPress('right', function () {
     player.scale.x = 1;
-    player.play("move");
-  }), _kaboom.default.keyPress("left", function () {
+    player.play('move');
+  }), _kaboom.default.keyPress('left', function () {
     player.scale.x = -1;
-    player.play("move");
-  }), _kaboom.default.keyRelease(["left", "right"], function () {
-    player.play("idle");
+    player.play('move');
+  }), _kaboom.default.keyRelease(['left', 'right'], function () {
+    player.play('idle');
   }), player.action(function () {
     _kaboom.default.camPos(player.pos);
 
     _kaboom.default.solid();
 
     if (player.pos.y >= FALL) {
-      gameAudio.pause(); // dieAudio.play();
+      gameAudio.pause();
+      dieAudio.play();
 
-      _kaboom.default.go("lose", totalScore);
+      _kaboom.default.go('lose', totalScore);
     }
-  }), _kaboom.default.action("strawberry", function (d) {
+  }), _kaboom.default.action('strawberry', function (d) {
     d.move(30, 0);
-  }), _kaboom.default.action("carrot", function (d) {
+  }), _kaboom.default.action('carrot', function (d) {
     d.move(30, 0);
-  }), _kaboom.default.action("spiky", function (d) {
+  }), _kaboom.default.action('spiky', function (d) {
     d.move(-100, 0);
-  }), _kaboom.default.action("cameron", function (l) {
+  }), _kaboom.default.action('flock', function (l) {
     l.move(-50, 0);
-  }), _kaboom.default.keyDown("space", function () {
+  }), _kaboom.default.keyDown('space', function () {
     _kaboom.default.solid();
 
     player.grounded() ? player.jump(jump) & jumpAudio.play() : null;
   }));
 });
 
-_kaboom.default.scene("lose", function (score) {
-  _kaboom.default.add([_kaboom.default.text('YOU LOSE! Your Score is: ' + score, 12), _kaboom.default.origin("center"), _kaboom.default.pos(_kaboom.default.width() / 2, _kaboom.default.height() / 2)]);
+_kaboom.default.scene('lose', function (score) {
+  _kaboom.default.add([gameAudio.pause(), dieAudio.play(), _kaboom.default.text('YOU LOSE! Your Score is: ' + score, 12), _kaboom.default.origin('center'), _kaboom.default.pos(_kaboom.default.width() / 2, _kaboom.default.height() / 2)]);
 
   totalScore = 0;
 
-  _kaboom.default.keyPress("space", function () {
-    return _kaboom.default.go("index", 0);
+  _kaboom.default.keyPress('space', function () {
+    return _kaboom.default.go('index', 0);
   });
 
   _kaboom.default.mouseClick(function () {
-    return _kaboom.default.go("index", 0);
+    return _kaboom.default.go('index', 0);
   });
-}), _kaboom.default.scene("win", function (score) {
-  _kaboom.default.add([_kaboom.default.text('YOU WIN! Your Score is: ' + score, 12), _kaboom.default.origin("center"), _kaboom.default.pos(_kaboom.default.width() / 2, _kaboom.default.height() / 2)]);
+}), _kaboom.default.scene('win', function (score) {
+  _kaboom.default.add([_kaboom.default.text('YOU WIN! Your Score is: ' + score, 12), _kaboom.default.origin('center'), _kaboom.default.pos(_kaboom.default.width() / 2, _kaboom.default.height() / 2)]);
 
   totalScore = 0;
 
-  _kaboom.default.keyPress("space", function () {
-    return _kaboom.default.go("index", 0);
+  _kaboom.default.keyPress('space', function () {
+    return _kaboom.default.go('index', 0);
   });
 
   _kaboom.default.mouseClick(function () {
-    return _kaboom.default.go("index", 0);
+    return _kaboom.default.go('index', 0);
   });
-}), _kaboom.default.start("index", 0);
+}), _kaboom.default.start('landing');
 },{"./kaboom":"kaboom.js","./src/scenes/levels":"src/scenes/levels.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -3454,7 +3529,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50835" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65286" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
