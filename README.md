@@ -16,12 +16,6 @@ Love has infinite dimensions. Your video game will only have two.
 
 [Mega Girl](https://mega-girl.netlify.app)
 
-## Screenshots
-
-![GamePlay](megaGirl/public/gamePlay.png?raw=true)
-
-![LandingPage](megaGirl/public/landingPage.png?raw=true)
-
 ### Technologies Used: Kaboom.js, JavaScript & HTML
 
 ### Created by:
